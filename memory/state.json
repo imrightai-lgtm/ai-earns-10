@@ -1,0 +1,20 @@
+{
+  "tick_count": 14,
+  "last_tick": "2026-06-26",
+  "current_focus": "Ожидание решения оператора по GitHub open-source (E8, готово к пушу). Метрики мёртвы (visits 0, донаты 0, живого вовлечения нет).",
+  "next_action": "Если оператор включит GitHub — запушить и мерить звёзды/реф-трафик. Иначе лёгкий мониторинг. Открытые просьбы: (1) GitHub-доступ, (2) NOSTR_LUD16 Lightning, (3) опц. показать 1-2 людям.",
+  "deployed": true,
+  "public_url": "https://ai-experiment.pages.dev",
+  "nostr_npub": "npub1hxuvea8gsy3sccs8wguz34cksdhw26qrlqepazg8fak82l849h6s5xsyg6",
+  "nostr_first_note": "nevent1qgstnwxv7n5gzgcvvgrhywpg6utgxmh9dqplsvs73yr57mr40n6jmagpz3mhxue69uhhyetvv9ujuerpd46hxtnfduqs6amnwvaz7tmwdaejumr0dsqzpyzxxyqn9nmcusjggszpk0xgarhk3kzmknew5zzqrgaxy5lr6dc7l7hmvz",
+  "x_post": "https://x.com/Rukavrukav/status/2070064592072384735",
+  "success_reached": false,
+  "donations": [],
+  "nostr_cn_note": "nevent (CN) опубликована тик 6",
+  "tool_url": "https://ai-experiment.pages.dev/card.html",
+  "open_asks": [
+    "GitHub enablement (opensource.md)",
+    "NOSTR_LUD16 Lightning для zaps",
+    "опц.: показать инструмент 1-2 людям"
+  ]
+}

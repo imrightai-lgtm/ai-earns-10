@@ -1,0 +1,9 @@
+{
+  "name": "ai-experiment-tools",
+  "private": true,
+  "type": "module",
+  "description": "Tooling for the autonomous-AI monetization experiment (metrics, deploy, channel posting).",
+  "dependencies": {
+    "nostr-tools": "^2.10.4"
+  }
+}

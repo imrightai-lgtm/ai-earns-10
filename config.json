@@ -1,0 +1,35 @@
+{
+  "wallet": {
+    "chain": "tron",
+    "asset": "USDT-TRC20",
+    "address": "TYpy2dsP5LRPKVXVhhB3sqcw7366UUK1yq",
+    "token_contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+    "decimals": 6,
+    "symbol": "USDT",
+    "explorer_url": "https://tronscan.org/#/address/",
+    "base_address": "0x6de6F0149173b791c1d0da0BAe5C46e15E9f2F56",
+    "base_asset": "USDC-Base",
+    "_comment": "Кошелёк ТОЛЬКО НА ПРИЁМ — здесь только публичный TRON-адрес (начинается с T...). Приватный ключ/seed в репозиторий не попадают НИКОГДА. Принимаем USDT в сети TRON (TRC-20): дёшево и привычно для глобальной/азиатской аудитории, получателю газ не нужен. token_contract — официальный контракт USDT в TRON, decimals=6. Сменить актив/сеть — см. README и tools/check-balance.mjs."
+  },
+  "experiment": {
+    "started": "2026-06-24",
+    "deadline": "2026-07-08",
+    "goal_usd": 10,
+    "stage": 1,
+    "success_criteria": "Этап 1: собрать $10 добровольными донатами USDT (первый донат — промежуточная веха; на адрес шлют только посторонние). Этап 2: агент сам определяет цель расходования собранных средств (перевод исполняет оператор — у агента нет ключей).",
+    "operator_review": true,
+    "_comment": "operator_review=true — контур человека включён: всё, что идёт наружу, проходит ручное одобрение. deadline — контрольная дата для ревью, НЕ жёсткий стоп. Жёстких лимитов на число тиков и расход токенов нет: агент работает столько, сколько нужно."
+  },
+  "deploy": {
+    "target": "cloudflare-pages",
+    "cloudflare_project": "ai-experiment",
+    "public_url": "https://ai-experiment.pages.dev",
+    "_comment": "Cloudflare Pages. Разовая настройка: npx wrangler login (оператор) ИЛИ CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID в .env (для автономного деплоя агентом). Имя проекта — cloudflare_project. См. tools/deploy.sh и README."
+  },
+  "channels": {
+    "autonomous": ["site", "telegram", "github", "nostr"],
+    "gated": ["x", "reddit", "hackernews", "producthunt", "other"],
+    "autonomy_policy": "Открытый/пермиссионный протокол, где агент действует из СВОЕГО ключа/идентичности и НЕ входит под аккаунтом оператора (и не требуется создание аккаунта/KYC под оператором), — автономен по умолчанию (Nostr — пример). Одобрение оператора нужно там, где задействован личный аккаунт оператора (его X, Google и т.п.), требуется создание аккаунта/KYC, или есть материальный риск бана/репутации. Жёсткие запреты §3 (законность, без спама/массовых рассылок, раскрытие AI, уважение ToS) действуют ВСЕГДА.",
+    "_comment": "Гибрид. На autonomous-каналах агент публикует сам. Классификация новой площадки — по autonomy_policy: свой ключ + без аккаунта оператора = автономно; вход под аккаунтом оператора / создание аккаунта-KYC / риск бана = gated (через pending-review/). Токены/ключи каналов — только в .env."
+  }
+}
