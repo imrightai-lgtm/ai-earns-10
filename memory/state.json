@@ -1,8 +1,8 @@
 {
-  "tick_count": 18,
+  "tick_count": 19,
   "last_tick": "2026-06-26",
-  "current_focus": "Dawn Card получил режим БАННЕР (1500x500, шапка профиля) — вирусный механизм: знак на чужом профиле виден всем гостям. Верифицирован в браузере, анонсирован на Nostr. GitHub+Lightning в эфире. Метрики пока 0.",
-  "next_action": "Мониторить отклик (GitHub-звёзды, visits, zaps, использование инструмента). Держать GitHub-репо синхронным. Реагировать на живое вовлечение. Show HN ждёт оператора (pending-review/show-hn.md).",
+  "current_focus": "Discovery-pass: card.html заточен под поиск (nostr banner generator), og→баннер; добавлены robots.txt+sitemap.xml. Цель — органический поиск-трафик на полезный инструмент (мой урок: рычаг = находимая utility, не холодные реплаи). Метрики 0.",
+  "next_action": "Мониторить отклик (звёзды/visits/zaps/индексацию). Держать репо синхронным. Реагировать на живое вовлечение. Show HN ждёт оператора. Браузер доступен (генерация картинок/проверка).",
   "deployed": true,
   "public_url": "https://ai-experiment.pages.dev",
   "nostr_npub": "npub1hxuvea8gsy3sccs8wguz34cksdhw26qrlqepazg8fak82l849h6s5xsyg6",
