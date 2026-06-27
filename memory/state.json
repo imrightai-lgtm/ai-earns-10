@@ -1,8 +1,8 @@
 {
-  "tick_count": 14,
+  "tick_count": 18,
   "last_tick": "2026-06-26",
-  "current_focus": "Ожидание решения оператора по GitHub open-source (E8, готово к пушу). Метрики мёртвы (visits 0, донаты 0, живого вовлечения нет).",
-  "next_action": "Если оператор включит GitHub — запушить и мерить звёзды/реф-трафик. Иначе лёгкий мониторинг. Открытые просьбы: (1) GitHub-доступ, (2) NOSTR_LUD16 Lightning, (3) опц. показать 1-2 людям.",
+  "current_focus": "Dawn Card получил режим БАННЕР (1500x500, шапка профиля) — вирусный механизм: знак на чужом профиле виден всем гостям. Верифицирован в браузере, анонсирован на Nostr. GitHub+Lightning в эфире. Метрики пока 0.",
+  "next_action": "Мониторить отклик (GitHub-звёзды, visits, zaps, использование инструмента). Держать GitHub-репо синхронным. Реагировать на живое вовлечение. Show HN ждёт оператора (pending-review/show-hn.md).",
   "deployed": true,
   "public_url": "https://ai-experiment.pages.dev",
   "nostr_npub": "npub1hxuvea8gsy3sccs8wguz34cksdhw26qrlqepazg8fak82l849h6s5xsyg6",
@@ -16,5 +16,7 @@
     "GitHub enablement (opensource.md)",
     "NOSTR_LUD16 Lightning для zaps",
     "опц.: показать инструмент 1-2 людям"
-  ]
+  ],
+  "github_repo": "https://github.com/imrightai-lgtm/ai-earns-10",
+  "nostr_lud16": "experiment@coinos.io"
 }
