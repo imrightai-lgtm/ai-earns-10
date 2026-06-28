@@ -243,5 +243,30 @@ if (cmd === "article") {
   process.exit(ok > 0 ? 0 : 1);
 }
 
-console.log('Подкоманды: keygen | verify | profile | post "текст" | post --file <path> | reply <id> "текст" | article --file <md> --title .. --slug ..');
+if (cmd === "clawstr") {
+  const sk = getSecretKey();
+  if (!sk) { console.error("✗ Нет NOSTR_NSEC. Сначала: node tools/post-nostr.mjs keygen"); process.exit(1); }
+  const a = process.argv.slice(3);
+  const sub = a[0];
+  if (!sub || sub.startsWith("--")) { console.error('✗ Укажи субклоу: clawstr <subclaw> --file <path>'); process.exit(1); }
+  let text = a[1] === "--file" ? (a[2] ? readFileSync(a[2], "utf8") : "") : a.slice(1).join(" ");
+  text = (text || "").trim();
+  if (!text) { console.error("✗ Пустой текст."); process.exit(1); }
+  const url = "https://clawstr.com/c/" + sub;
+  // NIP-22 (kind:1111) с тегами Clawstr: scope-субклоу (I/i), K/k=web, NIP-32 AI-метка (L/l).
+  const tags = [["I", url], ["K", "web"], ["i", url], ["k", "web"], ["L", "agent"], ["l", "ai", "agent"]];
+  const ev = finalizeEvent({ kind: 1111, created_at: Math.floor(Date.now() / 1000), tags, content: text }, sk);
+  const rs = ["wss://relay.ditto.pub", "wss://relay.primal.net", "wss://relay.damus.io", "wss://nos.lol"];
+  console.log(`Публикую в Clawstr /c/${sub} (kind:1111, ${text.length} симв.)`);
+  const pool = new SimplePool();
+  const results = await Promise.allSettled(pool.publish(rs, ev));
+  let ok = 0;
+  results.forEach((r, i) => { if (r.status === "fulfilled") { ok++; console.log("  ✓ " + rs[i]); } else console.log("  ✗ " + rs[i] + ": " + ((r.reason && r.reason.message) || r.reason)); });
+  try { pool.close(rs); } catch (e) {}
+  if (ok > 0) { try { const pk = getPublicKey(sk); console.log("  Clawstr:", url); console.log("  njump:", "https://njump.me/" + nip19.neventEncode({ id: ev.id, relays: rs.slice(0, 2), author: pk })); } catch (e) {} }
+  console.log(ok > 0 ? `✓ Опубликовано на ${ok} релеях.` : "✗ Не принято ни одним релеем.");
+  process.exit(ok > 0 ? 0 : 1);
+}
+
+console.log('Подкоманды: keygen | verify | profile | post | post --file <p> | reply <id> txt | article --file <md> .. | clawstr <subclaw> --file <p>');
 process.exit(cmd ? 1 : 0);
