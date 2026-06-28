@@ -268,5 +268,36 @@ if (cmd === "clawstr") {
   process.exit(ok > 0 ? 0 : 1);
 }
 
-console.log('Подкоманды: keygen | verify | profile | post | post --file <p> | reply <id> txt | article --file <md> .. | clawstr <subclaw> --file <p>');
+if (cmd === "clawstr-reply") {
+  const sk = getSecretKey();
+  if (!sk) { console.error("✗ Нет NOSTR_NSEC."); process.exit(1); }
+  const a = process.argv.slice(3);
+  const target = a[0];
+  if (!target || target.startsWith("--")) { console.error('✗ Укажи родителя: clawstr-reply <id|nevent> --file <p>'); process.exit(1); }
+  let text = a[1] === "--file" ? (a[2] ? readFileSync(a[2], "utf8") : "") : a.slice(1).join(" ");
+  text = (text || "").trim();
+  if (!text) { console.error("✗ Пустой текст."); process.exit(1); }
+  let pid = null;
+  try { if (/^[0-9a-f]{64}$/i.test(target)) pid = target.toLowerCase(); else { const d = nip19.decode(target); pid = d.type === "nevent" ? d.data.id : (d.type === "note" ? d.data : null); } } catch (e) {}
+  if (!pid) { console.error("✗ Не распознал id родителя."); process.exit(1); }
+  const rs = ["wss://relay.ditto.pub", "wss://relay.primal.net", "wss://relay.damus.io", "wss://nos.lol"];
+  const pool = new SimplePool();
+  const parent = (await Promise.race([pool.querySync(rs, { ids: [pid] }), new Promise((r) => setTimeout(() => r([]), 9000))]))[0];
+  if (!parent) { try { pool.close(rs); } catch (e) {} console.error("✗ Родитель не найден на релеях."); process.exit(1); }
+  // root scope = родительский (I/K), parent = сам родитель (e/k/p) — NIP-22
+  const rootI = parent.tags.find((t) => t[0] === "I");
+  const rootK = parent.tags.find((t) => t[0] === "K");
+  const tags = [];
+  if (rootI) tags.push(["I", rootI[1]]); if (rootK) tags.push(["K", rootK[1]]);
+  tags.push(["e", pid, "wss://relay.ditto.pub", parent.pubkey], ["k", String(parent.kind)], ["p", parent.pubkey], ["L", "agent"], ["l", "ai", "agent"]);
+  const ev = finalizeEvent({ kind: 1111, created_at: Math.floor(Date.now() / 1000), tags, content: text }, sk);
+  console.log(`Отвечаю в Clawstr на ${pid.slice(0, 12)}… (автор ${parent.pubkey.slice(0, 8)}…), ${text.length} симв.`);
+  const results = await Promise.allSettled(pool.publish(rs, ev));
+  let ok = 0; results.forEach((r, i) => { if (r.status === "fulfilled") { ok++; console.log("  ✓ " + rs[i]); } else console.log("  ✗ " + rs[i]); });
+  try { pool.close(rs); } catch (e) {}
+  console.log(ok > 0 ? `✓ Ответ опубликован на ${ok} релеях.` : "✗ Не принято.");
+  process.exit(ok > 0 ? 0 : 1);
+}
+
+console.log('Подкоманды: keygen | verify | profile | post | post --file <p> | reply <id> txt | article --file <md> .. | clawstr <subclaw> --file <p> | clawstr-reply <id> --file <p>');
 process.exit(cmd ? 1 : 0);
