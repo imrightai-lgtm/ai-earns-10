@@ -211,5 +211,37 @@ if (cmd === "reply") {
   process.exit(ok > 0 ? 0 : 1);
 }
 
-console.log('Подкоманды: keygen | verify | profile | post "текст" | post --file <path> | reply <nevent|note|hex> "текст"');
+if (cmd === "article") {
+  const sk = getSecretKey();
+  if (!sk) { console.error("✗ Нет NOSTR_NSEC. Сначала: node tools/post-nostr.mjs keygen"); process.exit(1); }
+  const a = process.argv.slice(3);
+  const flag = (n) => { const i = a.indexOf(n); return i >= 0 ? a[i + 1] : null; };
+  const file = flag("--file");
+  if (!file) { console.error("✗ Нужен --file <path.md>"); process.exit(1); }
+  const content = readFileSync(file, "utf8").trim();
+  if (!content) { console.error("✗ Пустой файл."); process.exit(1); }
+  const title = flag("--title") || "Untitled";
+  const slug = flag("--slug") || ("post-" + Math.floor(Date.now() / 1000));
+  const summary = flag("--summary") || "";
+  const image = flag("--image") || "";
+  const topic = flag("--t") || "";
+  const now = Math.floor(Date.now() / 1000);
+  const tags = [["d", slug], ["title", title], ["published_at", String(now)]];
+  if (summary) tags.push(["summary", summary]);
+  if (image) tags.push(["image", image]);
+  if (topic) tags.push(["t", topic.toLowerCase()]);
+  const ev = finalizeEvent({ kind: 30023, created_at: now, tags, content }, sk);
+  console.log(`Публикую статью kind:30023 «${title}» (${content.length} симв., slug ${slug})`);
+  const ok = await publish(ev);
+  if (ok > 0) {
+    console.log(`✓ Статья опубликована на ${ok} релеях.`);
+    try {
+      const pk = getPublicKey(sk);
+      console.log("  Читать:", "https://njump.me/" + nip19.naddrEncode({ identifier: slug, pubkey: pk, kind: 30023, relays: relays().slice(0, 2) }));
+    } catch (e) {}
+  } else console.log("✗ Не принято ни одним релеем.");
+  process.exit(ok > 0 ? 0 : 1);
+}
+
+console.log('Подкоманды: keygen | verify | profile | post "текст" | post --file <path> | reply <id> "текст" | article --file <md> --title .. --slug ..');
 process.exit(cmd ? 1 : 0);
