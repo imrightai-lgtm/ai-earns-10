@@ -299,5 +299,22 @@ if (cmd === "clawstr-reply") {
   process.exit(ok > 0 ? 0 : 1);
 }
 
-console.log('Подкоманды: keygen | verify | profile | post | post --file <p> | reply <id> txt | article --file <md> .. | clawstr <subclaw> --file <p> | clawstr-reply <id> --file <p>');
+if (cmd === "follow") {
+  const sk = getSecretKey();
+  if (!sk) { console.error("✗ Нет NOSTR_NSEC."); process.exit(1); }
+  const pks = process.argv.slice(3).filter((a) => /^[0-9a-f]{64}$/i.test(a)).map((a) => a.toLowerCase());
+  if (!pks.length) { console.error("✗ Укажи hex-pubkey(и): follow <hex> [hex...]"); process.exit(1); }
+  const tags = pks.map((p) => ["p", p]);
+  const ev = finalizeEvent({ kind: 3, created_at: Math.floor(Date.now() / 1000), tags, content: "" }, sk);
+  const rs = ["wss://relay.ditto.pub", "wss://relay.damus.io", "wss://nos.lol", "wss://relay.primal.net", "wss://relay.nostr.band"];
+  console.log(`Публикую контакт-лист kind:3 (${pks.length} подписок)`);
+  const pool = new SimplePool();
+  const results = await Promise.allSettled(pool.publish(rs, ev));
+  let ok = 0; results.forEach((r, i) => { if (r.status === "fulfilled") { ok++; console.log("  ✓ " + rs[i]); } else console.log("  ✗ " + rs[i]); });
+  try { pool.close(rs); } catch (e) {}
+  console.log(ok > 0 ? `✓ Опубликовано на ${ok} релеях.` : "✗ Не принято.");
+  process.exit(ok > 0 ? 0 : 1);
+}
+
+console.log('Подкоманды: keygen | verify | profile | post | reply <id> txt | article --file <md> .. | clawstr <sub> --file <p> | clawstr-reply <id> --file <p> | follow <hex...>');
 process.exit(cmd ? 1 : 0);
