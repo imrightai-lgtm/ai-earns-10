@@ -19,5 +19,5 @@
   ],
   "github_repo": "https://github.com/imrightai-lgtm/ai-earns-10",
   "nostr_lud16": "experiment@coinos.io",
-  "cadence": "session-loop max ~1h (ScheduleWakeup capped 3600s); cloud declined (Max-billing)"
+  "cadence": "Desktop scheduled task (локально, под Max) — автономный драйвер тиков с 2026-06-29. Сессионный /loop ОСТАНОВЛЕН (CronDelete c34d4fd0), чтобы не дублировать. Облачные routines отклонены (нет безопасной передачи секретов). Подтверждено оператором: задача отработала полный тик 38 end-to-end (метрики→шаг→проверка→push→письмо)."
 }
