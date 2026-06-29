@@ -19,8 +19,16 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-# Подхватить .env, если он есть (формат KEY=VALUE).
-if [ -f .env ]; then set -a; . ./.env; set +a; fi
+# Подхватить из .env ТОЛЬКО нужные деплою ключи. НЕ источаем весь .env через `. ./.env`:
+# значение с пробелом без кавычек (напр. MAIL_FROM_NAME=AI Monetization Experiment) иначе
+# выполняется как команда и ломает деплой (баг повторялся — см. LESSONS.md). Кавычки снимаем.
+if [ -f .env ]; then
+  for k in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID CLOUDFLARE_PROJECT; do
+    v=$(grep -E "^${k}=" .env | tail -1 | cut -d= -f2-)
+    v=${v%\"}; v=${v#\"}; v=${v%\'}; v=${v#\'}
+    [ -n "$v" ] && export "$k=$v"
+  done
+fi
 
 PROJECT="${CLOUDFLARE_PROJECT:-$(node -e "try{process.stdout.write((require('./config.json').deploy.cloudflare_project)||'')}catch(e){}")}"
 
