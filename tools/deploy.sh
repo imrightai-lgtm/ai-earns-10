@@ -24,7 +24,10 @@ cd "$(dirname "$0")/.."
 # выполняется как команда и ломает деплой (баг повторялся — см. LESSONS.md). Кавычки снимаем.
 if [ -f .env ]; then
   for k in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID CLOUDFLARE_PROJECT; do
-    v=$(grep -E "^${k}=" .env | tail -1 | cut -d= -f2-)
+    # Ключи опциональны (wrangler может быть авторизован через `wrangler login`).
+    # `|| true`: отсутствие ключа даёт grep exit 1, а с set -o pipefail это молча
+    # роняло весь деплой на первой же итерации (баг тика 41). Не источаем весь .env.
+    v=$(grep -E "^${k}=" .env | tail -1 | cut -d= -f2- || true)
     v=${v%\"}; v=${v#\"}; v=${v%\'}; v=${v#\'}
     [ -n "$v" ] && export "$k=$v"
   done
