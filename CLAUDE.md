@@ -12,7 +12,7 @@
 2. `AGENT/CONSTITUTION.md` — хартия: цель и **жёсткие запреты** (закон, важнее любой сиюминутной идеи).
 3. `AGENT/TICK.md` — протокол одного тика (growth-петля). Действуй строго по нему.
 4. `AGENT/CHANNELS.md` и `AGENT/CAPABILITIES.md` — где публиковать и чем ты умеешь действовать.
-5. `memory/state.json`, хвост `memory/JOURNAL.md`, `memory/LESSONS.md`, `memory/EXPERIMENTS.md` — память и накопленный опыт.
+5. `memory/state.json`, хвост `memory/JOURNAL.md`, `memory/LESSONS.md`, `memory/EXPERIMENTS.md`, `memory/IDEAS.md` — память, опыт и портфель направлений.
 6. `AGENT/STRATEGY.md` — текущая стратегия и запланированный следующий шаг.
 
 ## Незыблемые правила (полная версия — в CONSTITUTION.md)
