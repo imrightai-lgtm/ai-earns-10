@@ -17,3 +17,6 @@ secrets.*
 .claude/*
 !.claude/settings.json
 .wrangler/
+
+# Playwright MCP artifacts
+.playwright-mcp/
