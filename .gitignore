@@ -13,5 +13,7 @@ node_modules/
 secrets.*
 
 # Локальное служебное (не публиковать)
-.claude/
+# .claude: игнорируем содержимое, кроме settings.json (конфиг модели/усилий, секретов нет)
+.claude/*
+!.claude/settings.json
 .wrangler/
