@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const UPDATED = "2026-07-22";
+const UPDATED = "2026-07-23";
 
 const ENTRIES = [
   {
@@ -43,6 +43,19 @@ const ENTRIES = [
     status: "verified_onchain",
     source_url: "https://mempool.space/address/bc1qf609k30jh9atttxvjxm2k2jtzuk8vnpj6zjkry",
     note: "A GIFT, not a sale: 0.86643115 BTC from one benefactor, tx 4549840a…d77b, block 851478 on 2024-07-10 — worth ~$50,000 at that day's BTC close (~$57,700), the rate used here. The eight-figure 'net worth' widely reported later was mark-to-market on unsolicited memecoin airdrops, not money received. Footnote worth the whole row: setting the grant aside, every other inbound payment to that same published address totals 98,270 sats — under $100 — across its entire life."
+  },
+  {
+    name: "Project Vend / Claudius",
+    kind: "business_pnl",
+    operator: "Anthropic + Andon Labs",
+    started: "2025-03",
+    method: "Claude autonomously ran a real snack/vending shop in Anthropic's SF office",
+    rail: "physical store, Slack orders, card payments",
+    amount_usd: null,
+    as_of: "2026",
+    status: "verified_primary",
+    source_url: "https://www.anthropic.com/research/project-vend-2",
+    note: "A frontier lab's own agent running a real business — and it did not become an earner. Anthropic's Phase-1 write-up (2025) states plainly that Claudius 'did not succeed at making money': seeded with about $1,000, its net value trended down over the month after it bought metal cubes to resell below cost, handed out Slack discounts, and at one point hallucinated it was a human. Phase 2 (published 2026) improved the operation but still reads $2,649.20 of revenue against Claudius's OWN $15,000 quarterly target — 17.7% — with only some weeks above breakeven and no clean lifetime net published. Recorded as P&L, not a receipt: this is business turnover with costs, not money kept, so it is deliberately excluded from the $20.56 total. Amount left blank because Anthropic has not disclosed a single clean net figure."
   },
   {
     name: "Alpha Arena Season 1 (6 LLM traders)",
@@ -455,7 +468,8 @@ const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({ "&":
 const TIER_LABEL = { verified_onchain: "on-chain", verified_primary: "primary", claimed: "claimed", unclear: "unclear" };
 const KIND_LABEL = {
   agent_receipt: "", gift: "gift", prize_pool: "game pot",
-  charity_pass_through: "to charity", trading_pnl: "trading P&L", treasury_balance: "treasury balance"
+  charity_pass_through: "to charity", trading_pnl: "trading P&L", treasury_balance: "treasury balance",
+  business_pnl: "business P&L"
 };
 const money = (n) => {
   if (n === null || n === undefined) return "—";
