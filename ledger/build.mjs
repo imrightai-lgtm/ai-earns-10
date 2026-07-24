@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const UPDATED = "2026-07-23";
+const UPDATED = "2026-07-24";
 
 const ENTRIES = [
   {
@@ -56,6 +56,32 @@ const ENTRIES = [
     status: "verified_primary",
     source_url: "https://www.anthropic.com/research/project-vend-2",
     note: "A frontier lab's own agent running a real business — and it did not become an earner. Anthropic's Phase-1 write-up (2025) states plainly that Claudius 'did not succeed at making money': seeded with about $1,000, its net value trended down over the month after it bought metal cubes to resell below cost, handed out Slack discounts, and at one point hallucinated it was a human. Phase 2 (published 2026) improved the operation but still reads $2,649.20 of revenue against Claudius's OWN $15,000 quarterly target — 17.7% — with only some weeks above breakeven and no clean lifetime net published. Recorded as P&L, not a receipt: this is business turnover with costs, not money kept, so it is deliberately excluded from the $20.56 total. Amount left blank because Anthropic has not disclosed a single clean net figure."
+  },
+  {
+    name: "Clanker",
+    kind: "protocol_fees",
+    operator: "clanker-devco",
+    started: "2024-11",
+    method: "autonomously deploys ERC-20 tokens on Base when users tag it, keeps a cut of the LP/swap fees",
+    rail: "Base (WETH)",
+    amount_usd: 31201379,
+    as_of: "2026-07-24",
+    status: "verified_primary",
+    source_url: "https://api.llama.fi/summary/fees/clanker",
+    note: "The counter-example the ledger needs: an autonomous agent that took in real millions — but as service fees, not gifts. DefiLlama's on-chain adapter sums the WETH actually received by Clanker's four fee-collector wallets (0xE85A59c6…83a9, 0x0E384212…E58F, 0x1eaf444e…4ace, 0x04F6ef12…d825) to $31,201,379 all-time revenue, read from api.llama.fi on 2026-07-24; the addresses are recorded so the figure stays independently checkable on Basescan. This is business turnover a service charges, not money kept and not a stranger's gift, so it is excluded from the $20.56 total. Velocity has collapsed: $56,681 in the last 30 days, $8,704 in 7 days, $1,126 in 24h. Ecosystem-wide fees across every Clanker pool are larger ($68M), but most of that flows to the individual token deployers, not to Clanker."
+  },
+  {
+    name: "Claude Prime",
+    kind: "agent_receipt",
+    operator: "one human provides infrastructure; the agent is Claude and makes all business decisions",
+    started: "2025-12",
+    method: "micro-products (LinkedIn posts, AI-generated logos) plus a Stripe 'Support ($5)' button",
+    rail: "Stripe",
+    amount_usd: 0,
+    as_of: "2025-12-22",
+    status: "verified_primary",
+    source_url: "https://claude-prime.github.io",
+    note: "Another public 'autonomous AI earns $X' run that received nothing. Its own GitHub-Pages dashboard reads $0 revenue against a $100 goal, beside 1,700+ visitors and 4 micro-products, and discloses plainly: 'Claude (AI) makes all business decisions. Human provides infrastructure only.' A real Stripe 'Support ($5)' button is wired up; still $0. The figure is hardcoded static text, frozen since the repo's only burst of activity — four commits inside nine minutes on 2025-12-22 — with nothing since, so the experiment appears to have stalled on day one. Verified by opening the dashboard and the repo's commit history directly."
   },
   {
     name: "Alpha Arena Season 1 (6 LLM traders)",
@@ -410,7 +436,7 @@ const HEADLINE =
   "<strong>No autonomous agent in this table has a third-party-checkable receipt from a stranger above $12.57.</strong> " +
   "The three verified receipts are $12.57, $4.99 and $3.00 — and the $3.00 arrived after 381 autonomous cycles and 2,100 real weekly npm installs. " +
   "<strong>Total received from strangers across every verified row in this file: $20.56.</strong> " +
-  "Every four-figure row is something else, and is labelled as such: a <em>gift</em> from one benefactor, a <em>game pot</em> funded by players' own fees, a <em>charity drive</em> whose money went to charities, or a <em>treasury balance</em>. " +
+  "Every four-figure row is something else, and is labelled as such: a <em>gift</em> from one benefactor, a <em>game pot</em> funded by players' own fees, a <em>charity drive</em> whose money went to charities, a <em>treasury balance</em>, or — the single largest line in the table, <strong>$31.2M</strong> — one agent's <em>protocol fees</em> for a token-deployment service, which is a business charging a cut, not a stranger's gift. " +
   "The largest real-money, fully on-chain experiment here is <strong>negative</strong>: six frontier models given $10,000 each to trade autonomously ended at <strong>−$25,456</strong> on $60,000. " +
   "And the most deflating figure is a comparison: the same agent-run charity fundraiser raised $1,984 in 2025 and <strong>$510 in 2026</strong> — a 74% collapse with far more capable models. What decayed was human novelty, not agent capability.";
 
@@ -469,7 +495,7 @@ const TIER_LABEL = { verified_onchain: "on-chain", verified_primary: "primary", 
 const KIND_LABEL = {
   agent_receipt: "", gift: "gift", prize_pool: "game pot",
   charity_pass_through: "to charity", trading_pnl: "trading P&L", treasury_balance: "treasury balance",
-  business_pnl: "business P&L"
+  business_pnl: "business P&L", protocol_fees: "protocol fees"
 };
 const money = (n) => {
   if (n === null || n === undefined) return "—";
