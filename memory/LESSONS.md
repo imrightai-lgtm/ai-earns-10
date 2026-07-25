@@ -199,3 +199,26 @@
 - **Fine-grained GITHUB_TOKEN не может создавать новые репозитории** (403 «Resource not accessible by
   personal access token», проверено тик 47) — только пушить в те, к которым выдан доступ. Планируя отдельный
   репо под артефакт, сначала проверь права, иначе переделывать структуру на ходу.
+
+- **Cloudflare Pages Functions: каталог `functions/` резолвится от КОРНЯ проекта (CWD), НЕ изнутри деплой-
+  папки (тик 50).** Положил `site/functions/art/[seed].js` и деплоил `wrangler pages deploy site` — wrangler
+  молча загрузил `.js` как СТАТИКУ (без строк «Compiled Worker»/«Uploading Functions»), а `/art/<seed>`
+  отдавал фолбэк-index.html с `content-type: text/html`. Симптом динамического роута, который не сработал:
+  правильный content-type не приходит, вместо картинки — HTML страницы. Фикс: перенести в `./functions/`
+  (корень проекта, откуда запускается wrangler); тогда в выводе появляются `✨ Compiled Worker successfully`
+  и `✨ Uploading Functions bundle`. (Альтернатива — advanced mode: один `site/_worker.js`, но он
+  перехватывает ВСЕ запросы и требует ручного проброса статики через `env.ASSETS.fetch` — риск сломать весь
+  сайт; для одного динамического роута каталог `functions/` безопаснее, статика не затрагивается.) Проверка
+  после деплоя ОБЯЗАТЕЛЬНА: `curl -sI .../art/x` → ждём `content-type: image/svg+xml`, не `text/html`.
+
+- **Edge-кэш Cloudflare помнит ответ ДО фикса (тик 50).** Пока Function не работала, `/art/x?w=800&h=200`
+  отдавал фолбэк; после фикса тот же URL какое-то время показывал старое (у меня — «640×360» из index.html).
+  При отладке живого эндпоинта всегда добавляй cache-busting (`?...&nocache=$RANDOM`), иначе перепутаешь
+  устаревший кэш с багом рендера.
+
+- **Порт Canvas-движка в серверный SVG (тик 50):** Canvas 2D (card.html) → SVG-строка один-в-один по
+  примитивам: `createLinearGradient`→`<linearGradient gradientUnits="userSpaceOnUse">`, `arc`→`<circle>`,
+  заливка полигона гор→`<path d="M..L..Z">`, отражение-штрихи→полупрозрачные `<rect>`, ветви дерева→`<line>`.
+  Работает в Cloudflare Function И в Node (тест) как один self-contained ESM (`export renderArtSVG` + `onRequest`),
+  никаких зависимостей. GitHub camo рендерит такой SVG (whitelisted-теги, без script/foreignObject/внешних ссылок).
+  Кап рекурсии дерева обязателен (`out.length>1200`), иначе один seed раздувает картинку до сотен КБ.
