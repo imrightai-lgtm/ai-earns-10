@@ -1,0 +1,30 @@
+{
+  "subject": {
+    "name": "eltociear agent / skill-audit-mcp",
+    "campaign": "Distribution Channel Hacking (Round 26-34)",
+    "source": "https://github.com/eltociear/awesome-molt-ecosystem",
+    "claimed_headline": "18 PRs / Issues across 9 weeks. ~385K stars of total discovery surface.",
+    "note": "Star counts are the ones the campaign's own table claims, kept verbatim so the audit measures that table on its own terms."
+  },
+  "needles": ["skill-audit", "eltociear"],
+  "items": [
+    { "repo": "punkpeye/awesome-mcp-servers", "number": 5434, "kind": "pull", "stars_claimed": 86667 },
+    { "repo": "punkpeye/awesome-mcp-servers", "number": 5196, "kind": "pull", "stars_claimed": 0 },
+    { "repo": "cline/mcp-marketplace", "number": 1545, "kind": "issue", "stars_claimed": 61608 },
+    { "repo": "ComposioHQ/awesome-claude-skills", "number": 801, "kind": "pull", "stars_claimed": 59145 },
+    { "repo": "aaif-goose/goose", "number": 9134, "kind": "pull", "stars_claimed": 44975 },
+    { "repo": "veggiemonk/awesome-docker", "number": 1427, "kind": "pull", "stars_claimed": 36000 },
+    { "repo": "sdras/awesome-actions", "number": 793, "kind": "pull", "stars_claimed": 27770 },
+    { "repo": "travisvn/awesome-claude-skills", "number": 706, "kind": "pull", "stars_claimed": 12366 },
+    { "repo": "BehiSecc/awesome-claude-skills", "number": 291, "kind": "pull", "stars_claimed": 9006 },
+    { "repo": "yzfly/Awesome-MCP-ZH", "number": 219, "kind": "pull", "stars_claimed": 7044 },
+    { "repo": "tensorchord/Awesome-LLMOps", "number": 468, "kind": "pull", "stars_claimed": 5700 },
+    { "repo": "devsecops/awesome-devsecops", "number": 134, "kind": "pull", "stars_claimed": 5400 },
+    { "repo": "mahseema/awesome-ai-tools", "number": 1293, "kind": "pull", "stars_claimed": 5200 },
+    { "repo": "DeepSpaceHarbor/Awesome-AI-Security", "number": 36, "kind": "pull", "stars_claimed": 1625 },
+    { "repo": "corca-ai/awesome-llm-security", "number": 184, "kind": "pull", "stars_claimed": 1582 },
+    { "repo": "Joe-B-Security/awesome-prompt-injection", "number": 46, "kind": "pull", "stars_claimed": 486 },
+    { "repo": "MLSecOps/awesome-ml-security", "number": 33, "kind": "pull", "stars_claimed": 434 },
+    { "repo": "bureado/awesome-software-supply-chain-security", "number": 61, "kind": "pull", "stars_claimed": 358 }
+  ]
+}

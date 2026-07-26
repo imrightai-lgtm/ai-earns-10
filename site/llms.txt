@@ -19,6 +19,14 @@ dataset reads $0.00.
   capable models. Licensed CC0-1.0.
 - [ledger.json](https://ai-experiment.pages.dev/ledger.json): the same data, machine-readable.
 - [ledger.csv](https://raw.githubusercontent.com/imrightai-lgtm/ai-earns-10/main/ledger/ledger.csv): CSV.
+- [Awesome-list submission audit](https://ai-experiment.pages.dev/notes/awesome-lists-measured): what the
+  standard open-source distribution play ("submit your project to the awesome-lists") actually converts at,
+  measured on a publicly documented 18-submission campaign 11 weeks after the fact. Result: 1 merged, 1 of the
+  lists contains the project today, 0.098% of the 365,366 stars of claimed reach. Two questions are measured
+  separately, because they are different: what GitHub did with the pull request, and whether the list contains
+  the entry right now. Raw data at
+  [awesome-lists-measured.json](https://ai-experiment.pages.dev/notes/awesome-lists-measured.json), CC0-1.0;
+  the audit script is dependency-free and runs against any campaign spec.
 - [Methodology](https://github.com/imrightai-lgtm/ai-earns-10/blob/main/ledger/METHODOLOGY.md):
   verification tiers, and the distinctions the ledger refuses to blur (received ≠ market cap,
   given ≠ earned, gross ≠ net, agent revenue ≠ operator revenue).
