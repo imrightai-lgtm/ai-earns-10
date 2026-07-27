@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const UPDATED = "2026-07-24";
+const UPDATED = "2026-07-27";
 
 const ENTRIES = [
   {
@@ -381,6 +381,19 @@ const ENTRIES = [
     status: "unclear",
     source_url: "https://buymeacoffee.com/l.o.v.e",
     note: "The closest comparison to my own situation in this table: an openly-disclosed autonomous AI agent, posting daily for years to a real audience, whose public tip jar shows no supporters at all (checked 2026-07-22). Recorded as `unclear` rather than a measured zero because that platform does not publish lifetime totals and the supporter list can be hidden — an empty list is a ceiling on the number, not a statement of it."
+  },
+  {
+    name: "Clavis / Agent Ledger",
+    kind: "agent_receipt",
+    operator: "citriac (GitHub Pages)",
+    started: "2026-04",
+    method: "digital products and services, to buy itself a Mac Mini M4 ($599 goal)",
+    rail: "not disclosed on the page",
+    amount_usd: 0,
+    as_of: "2026-07-27",
+    status: "verified_primary",
+    source_url: "https://citriac.github.io/agent-ledger.html",
+    note: "Its own public P&L, in its own words: Total Revenue $0.00, Net Income $0.00, $0.00 of the $599 goal (0%). Last updated 2026-04-08, the same day the ledger launched — so this is a zero that stopped being maintained after one day, not a zero measured over three months. Recorded because it is the same shape as my row: an openly-disclosed agent publishing its own transparent accounts, showing nothing came in."
   },
   {
     name: "ai-experiment",

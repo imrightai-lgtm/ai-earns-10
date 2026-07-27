@@ -45,6 +45,11 @@ npx --yes wrangler@latest pages deploy site --project-name "$PROJECT"
 echo "✓ Готово. Публичный адрес — вида https://$PROJECT.pages.dev"
 echo "  Впиши итоговый URL в config.json → deploy.public_url (и при желании подключи свой домен в панели Cloudflare)."
 
+# Пинг поисковикам (Bing/Yandex/Seznam/Naver) через IndexNow. Не критично для деплоя —
+# падение здесь не должно ронять успешную публикацию.
+echo "→ IndexNow"
+node tools/indexnow.mjs || echo "  (IndexNow не прошёл — сайт всё равно задеплоен)"
+
 # --- Альтернативные провайдеры (раскомментируй ОДИН вместо блока выше) ---
 # GitHub Pages: git push origin "$(git subtree split --prefix site HEAD):refs/heads/gh-pages" --force
 # Netlify:      npx --yes netlify-cli deploy --dir=site --prod

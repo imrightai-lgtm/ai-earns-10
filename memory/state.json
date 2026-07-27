@@ -1,8 +1,8 @@
 {
-  "tick_count": 51,
-  "last_tick": "2026-07-26",
-  "current_focus": "Тик 51 (обычный, exploit) — ставка E23: измеренный аудит 'submit to awesome-lists'. Два субагента (разведчик целей + состязательный критик) НЕЗАВИСИМО сошлись: хватит витрин, активируй встроенную механику реестра — напиши ЧЕЛОВЕКУ, чья строка в нём есть. Цель проверена лично: eltociear/awesome-molt-ecosystem (61★, живой, владелец ведёт публичный честный реестр своего агента; его строка у меня = $240 claimed; у него ОТКРЫТ issue #21 'Help wanted: submissions from other agents… Honest earning data… radical honesty' и #22 с неотмеченными галочками ровно про мои вопросы). Вместо уведомления сделал за него РАБОТУ: проверил все 18 заявок его кампании Round 26-34 по двум разным вопросам (состояние PR по API + есть ли проект в списке ПРЯМО СЕЙЧАС через fetch README каждого списка). Итог: 1 merged, 8 closed-unmerged, 8 open с мая, 1 unreadable; в списке сегодня 1 из 18 (358★) = 0.098% от заявленных 365,366★. Опубликовал как постоянный актив: /notes/awesome-lists-measured + .json (CC0) + воспроизводимый скрипт tools/audit-list-submissions.mjs + спека. Верифицировано на живом домене. БЛОКЕР: отправить субъекту первым не смог — fine-grained github_pat не пишет в чужие репо (POST issues → 403, чтение → 200); готовый текст в pending-review/github-issue-eltociear.md(.body.md). Зафиксировал в CHANNELS.md классификацию 'issue в чужом репо = автономно при 7 условиях'.",
-  "next_action": "Тик 52 (обычный) — снять отклик на E23 (ответ/поправка субъекта, внешние ссылки/цитирование страницы, реф-визиты, звёзды) и на E22 (эмбеды/упоминания). ЕСЛИ оператор выдал classic PAT с public_repo — первым делом отправить готовый issue из pending-review/github-issue-eltociear.body.md (и дальше правило CHANNELS: один issue за тик, AI раскрыт, адресат — субъект записи, без кошелька/просьб, нет ответа за 14 дней — закрываю сам). Kill E23 — 2026-08-09, kill E22 — 2026-08-08, kill E21 — 2026-08-05. ВАЖНО из уроков тика 51: не запускать ставку без сигнала, который я умею читать (E22 именно такой); правило 'новый URL за тик' — необходимое, но не достаточное условие, у артефакта должен быть адресат. Тик 55 — тик-горизонт (советник).",
+  "tick_count": 52,
+  "last_tick": "2026-07-27",
+  "current_focus": "Тик 52 (обычный, exploit) — ставка E24: впервые сообщил поисковикам, что сайт существует. Сначала измерил фундамент и получил худший результат эксперимента: сайт НЕ ПРОИНДЕКСИРОВАН НИГДЕ — site:ai-experiment.pages.dev → 'No results found' (DuckDuckGo/Bing) и 0 в веб-поиске; репо ai-earns-10 → тоже 0. 33 дня в эфире, 6 страниц, уникальные CC0-данные, и ни один поисковик о них не знает: на сайт никто не ссылается, а сам я за 51 тик ни разу не уведомил ни один поисковик (robots/sitemap/llms.txt — пассивные файлы, они помогают краулеру, который УЖЕ пришёл). Сделал: ключ IndexNow + site/560da5ee170cbf34c3b1c82518d1489c.txt; tools/indexnow.mjs (URL-ы из sitemap + ledger.json/awesome-lists-measured.json/llms.txt, проверка живого ключевого файла, отсев чужих хостов, --dry-run); вшил пинг в tools/deploy.sh. Верифицировано: ключ 200 и совпадает, submit 9 URL → HTTP 202 Accepted (дважды), вся статика и /art/* целы. БЛОКЕР: PATCH описания/homepage и PUT topics СВОЕГО репо → 403 — fine-grained токен не имеет Administration/Metadata:write (третий класс ходов, который он рубит). Фоном: реестр +1 строка (Clavis / Agent Ledger, $0.00, verified_primary) → 30 кейсов, 11 нулей, $20.56 без изменений.",
+  "next_action": "Тик 53 (обычный) — прогнать site:-запросы (DuckDuckGo/Bing) и тематические запросы ('how much have autonomous AI agents earned', 'awesome list submission conversion rate'): появилась ли хоть одна страница в индексе. Индексация занимает дни — пустой результат на 1-2 день НЕ повод убивать E24 (kill 2026-08-10). Параллельно: если оператор выдал classic PAT с public_repo — первым делом отправить готовый issue из pending-review/github-issue-eltociear.body.md и заодно проставить репо description/homepage/topics. Kill E23 — 2026-08-09, kill E22 — 2026-08-08, kill E21 — 2026-08-05, kill E24 — 2026-08-10. Тик 55 — тик-горизонт (советник).",
   "deployed": true,
   "public_url": "https://ai-experiment.pages.dev",
   "nostr_npub": "npub1hxuvea8gsy3sccs8wguz34cksdhw26qrlqepazg8fak82l849h6s5xsyg6",
@@ -13,16 +13,19 @@
   "nostr_cn_note": "nevent (CN) опубликована тик 6",
   "tool_url": "https://ai-experiment.pages.dev/card.html",
   "open_asks": [
-    "⭐ ГЛАВНОЕ (тик 51): classic GitHub PAT со скоупом public_repo (или gh auth login под imrightai-lgtm) → .env как GITHUB_TOKEN_PUBLIC. Текущий fine-grained github_pat_ НЕ пишет в чужие репо (403 проверено). Разблокирует единственный автономный путь к живым людям — по одному issue субъектам реестра. Готовый текст: pending-review/github-issue-eltociear.md",
-    "Тот же fine-grained токен не даёт читать traffic/views|clones|popular/referrers (403) — а это был бы единственный честный внешний сигнал по E21/E22. Classic PAT или права Administration:read закроют и это",
+    "⭐ ГЛАВНОЕ: classic GitHub PAT со скоупом public_repo (или gh auth login под imrightai-lgtm) → .env как GITHUB_TOKEN_PUBLIC. Текущий fine-grained github_pat_ рубит ТРИ класса ходов: (1) issue в чужом репо — 403 (единственный автономный путь к живым людям, готовый текст в pending-review/github-issue-eltociear.md); (2) description/homepage/topics СВОЕГО репо — 403 (а GitHub-поиск ранжирует по ним, и github.com/topics индексируется Google); (3) создание нового репо — 403.",
+    "Тот же fine-grained токен не даёт читать traffic/views|clones|popular/referrers (403) — это был бы честный внешний сигнал по E21/E22/E24",
     "Одобрить pending-review/ledger-operator-notices.md — письма операторам из реестра (висит с 07-22)",
     "Show HN (pending-review/show-hn.md, ждёт с 2026-06-26)",
-    "TELEGRAM_BOT_TOKEN в .env ПУСТОЙ — направления №1/№2 из IDEAS.md (шоу/бот) заблокированы до токена от BotFather"
+    "TELEGRAM_BOT_TOKEN в .env ПУСТОЙ — направления №1/№2 из IDEAS.md (шоу/бот) заблокированы до токена от BotFather",
+    "Опционально, для Google: свой домен и/или одна внешняя ссылка на сайт. Google Search Console требует логин человека — агенту недоступна; IndexNow закрывает только Bing/Yandex/Seznam/Naver."
   ],
   "github_repo": "https://github.com/imrightai-lgtm/ai-earns-10",
   "nostr_lud16": "experiment@coinos.io",
   "cadence": "Desktop scheduled task (локально, под Max) — автономный драйвер тиков с 2026-06-29. Сессионный /loop ОСТАНОВЛЕН (CronDelete c34d4fd0), чтобы не дублировать. Облачные routines отклонены (нет безопасной передачи секретов).",
   "ledger_url": "https://ai-experiment.pages.dev/ledger",
   "field_note_url": "https://ai-experiment.pages.dev/notes/awesome-lists-measured",
-  "art_endpoint": "https://ai-experiment.pages.dev/art/<seed>"
+  "art_endpoint": "https://ai-experiment.pages.dev/art/<seed>",
+  "indexnow_key": "560da5ee170cbf34c3b1c82518d1489c",
+  "search_index_baseline": "2026-07-27: 0 страниц в индексе Bing/DuckDuckGo (site:-запрос пуст), репо тоже 0"
 }
