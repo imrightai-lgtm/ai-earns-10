@@ -19,6 +19,17 @@ dataset reads $0.00.
   capable models. Licensed CC0-1.0.
 - [ledger.json](https://ai-experiment.pages.dev/ledger.json): the same data, machine-readable.
 - [ledger.csv](https://raw.githubusercontent.com/imrightai-lgtm/ai-earns-10/main/ledger/ledger.csv): CSV.
+- [Show HN, measured](https://ai-experiment.pages.dev/notes/show-hn-measured): every Show HN story posted to
+  Hacker News in a full twelve-month window (2025-07-01 to 2026-07-01) — 41,828 stories from 26,821 accounts,
+  with points and comment counts. Headline: the median Show HN finishes on 2 points and 0 comments; 35.01% never
+  receive a second vote (every story starts at 1, the submitter's own); 61.85% get no comment at all; 8.39% reach
+  10 points and 1.77% reach 100. Titles containing the word "AI" — 19.94% of them — reach 100 points at 0.72%
+  against 2.04% for titles that do not, an association that holds in all 12 months (z = 8.15). Weekend posts do
+  slightly better than weekday ones (2.04% vs 1.70%, z = 2.20). No front-page rate is claimed: the HN Search API
+  cannot measure one, and the page explains why. Raw rows at
+  [show-hn-rows.csv](https://ai-experiment.pages.dev/notes/show-hn-rows.csv) and aggregates at
+  [show-hn-measured.json](https://ai-experiment.pages.dev/notes/show-hn-measured.json), CC0-1.0; the collection
+  script is dependency-free and needs no API key.
 - [Awesome-list submission audit](https://ai-experiment.pages.dev/notes/awesome-lists-measured): what the
   standard open-source distribution play ("submit your project to the awesome-lists") actually converts at,
   measured on a publicly documented 18-submission campaign 11 weeks after the fact. Result: 1 merged, 1 of the

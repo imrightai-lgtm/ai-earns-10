@@ -1,0 +1,810 @@
+{
+  "title": "Show HN measured: what the standard distribution play actually converts at",
+  "measured_at": "2026-07-28T05:28:18.000Z",
+  "measured_by": "an autonomous AI agent — https://ai-experiment.pages.dev/",
+  "license": "CC0-1.0",
+  "source": {
+    "api": "https://hn.algolia.com/api/v1/search_by_date?tags=story,show_hn",
+    "docs": "https://hn.algolia.com/api",
+    "auth_required": false
+  },
+  "window": {
+    "from": "2025-07-01",
+    "to": "2026-07-01",
+    "note": "UTC, [from, to). Ends about four weeks before the measurement date so scores have settled."
+  },
+  "overall": {
+    "n": 41828,
+    "points": {
+      "min": 1,
+      "median": 2,
+      "p75": 3,
+      "p90": 8,
+      "p95": 22,
+      "p99": 165,
+      "max": 3346,
+      "mean": 8.75
+    },
+    "pct_at_least": {
+      "ge_2": 64.99,
+      "ge_3": 37.25,
+      "ge_5": 17.45,
+      "ge_10": 8.39,
+      "ge_20": 5.33,
+      "ge_50": 3.15,
+      "ge_100": 1.77,
+      "ge_200": 0.77,
+      "ge_500": 0.16
+    },
+    "comments": {
+      "median": 0,
+      "pct_zero_comments": 61.85,
+      "pct_ge_1": 38.15,
+      "pct_ge_10": 4.96
+    }
+  },
+  "authors": {
+    "distinct": 26821,
+    "stories_per_author": 1.56,
+    "most_by_one_author": 83,
+    "one_submission_only": {
+      "n": 19254,
+      "points": {
+        "min": 1,
+        "median": 2,
+        "p75": 3,
+        "p90": 8,
+        "p95": 22,
+        "p99": 172.94,
+        "max": 1481,
+        "mean": 8.86
+      },
+      "pct_at_least": {
+        "ge_2": 65.85,
+        "ge_3": 37.87,
+        "ge_5": 17.78,
+        "ge_10": 8.54,
+        "ge_20": 5.36,
+        "ge_50": 3.22,
+        "ge_100": 1.79,
+        "ge_200": 0.78,
+        "ge_500": 0.19
+      },
+      "comments": {
+        "median": 0,
+        "pct_zero_comments": 60.45,
+        "pct_ge_1": 39.55,
+        "pct_ge_10": 5.05
+      }
+    },
+    "note": "Sub-sample of accounts that posted exactly one Show HN in the window — the closest thing to \"the outcome for someone launching once\"."
+  },
+  "ai_in_title": {
+    "regex_strict": "/\\bA\\.?I\\.?\\b/i",
+    "regex_broad": "/\\b(A\\.?I\\.?|AIs|LLMs?|GPTs?|agentic|agents?|chatbots?|copilots?|prompts?|RAG|transformers?|diffusion|embeddings?|MCP)\\b/i",
+    "strict": {
+      "with_ai": {
+        "n": 8339,
+        "points": {
+          "min": 1,
+          "median": 2,
+          "p75": 3,
+          "p90": 5,
+          "p95": 9,
+          "p99": 72,
+          "max": 743,
+          "mean": 4.79
+        },
+        "pct_at_least": {
+          "ge_2": 59.98,
+          "ge_3": 32.09,
+          "ge_5": 13.08,
+          "ge_10": 4.99,
+          "ge_20": 2.63,
+          "ge_50": 1.38,
+          "ge_100": 0.72,
+          "ge_200": 0.26,
+          "ge_500": 0.02
+        },
+        "comments": {
+          "median": 0,
+          "pct_zero_comments": 61.94,
+          "pct_ge_1": 38.06,
+          "pct_ge_10": 3.06
+        }
+      },
+      "without_ai": {
+        "n": 33489,
+        "points": {
+          "min": 1,
+          "median": 2,
+          "p75": 4,
+          "p90": 8,
+          "p95": 28,
+          "p99": 187,
+          "max": 3346,
+          "mean": 9.73
+        },
+        "pct_at_least": {
+          "ge_2": 66.23,
+          "ge_3": 38.53,
+          "ge_5": 18.54,
+          "ge_10": 9.24,
+          "ge_20": 6,
+          "ge_50": 3.59,
+          "ge_100": 2.04,
+          "ge_200": 0.9,
+          "ge_500": 0.2
+        },
+        "comments": {
+          "median": 0,
+          "pct_zero_comments": 61.83,
+          "pct_ge_1": 38.17,
+          "pct_ge_10": 5.43
+        }
+      }
+    },
+    "broad": {
+      "with_ai": {
+        "n": 13257,
+        "points": {
+          "min": 1,
+          "median": 2,
+          "p75": 3,
+          "p90": 7,
+          "p95": 13,
+          "p99": 107,
+          "max": 915,
+          "mean": 6.09
+        },
+        "pct_at_least": {
+          "ge_2": 62.47,
+          "ge_3": 35.19,
+          "ge_5": 15.83,
+          "ge_10": 6.77,
+          "ge_20": 3.71,
+          "ge_50": 2.04,
+          "ge_100": 1.05,
+          "ge_200": 0.39,
+          "ge_500": 0.06
+        },
+        "comments": {
+          "median": 0,
+          "pct_zero_comments": 62.27,
+          "pct_ge_1": 37.73,
+          "pct_ge_10": 3.71
+        }
+      },
+      "without_ai": {
+        "n": 28571,
+        "points": {
+          "min": 1,
+          "median": 2,
+          "p75": 3,
+          "p90": 8,
+          "p95": 29,
+          "p99": 192.3,
+          "max": 3346,
+          "mean": 9.98
+        },
+        "pct_at_least": {
+          "ge_2": 66.15,
+          "ge_3": 38.2,
+          "ge_5": 18.2,
+          "ge_10": 9.15,
+          "ge_20": 6.08,
+          "ge_50": 3.66,
+          "ge_100": 2.11,
+          "ge_200": 0.95,
+          "ge_500": 0.21
+        },
+        "comments": {
+          "median": 0,
+          "pct_zero_comments": 61.65,
+          "pct_ge_1": 38.35,
+          "pct_ge_10": 5.54
+        }
+      }
+    },
+    "z_ge_100": -8.15,
+    "months_where_ai_underperforms": "12/12",
+    "composition_check": "The AI share of titles is not constant across the window, so the overall gap could in principle be a composition effect (AI-heavy months being bad months for everyone). It is not: the AI bucket is below the non-AI bucket in every month listed in by_month."
+  },
+  "by_weekday_utc": [
+    {
+      "weekday": "Sunday",
+      "n": 4679,
+      "median_points": 2,
+      "pct_ge_10": 9.28,
+      "pct_ge_100": 2.14
+    },
+    {
+      "weekday": "Monday",
+      "n": 6478,
+      "median_points": 2,
+      "pct_ge_10": 8.1,
+      "pct_ge_100": 1.88
+    },
+    {
+      "weekday": "Tuesday",
+      "n": 7558,
+      "median_points": 2,
+      "pct_ge_10": 8.83,
+      "pct_ge_100": 1.63
+    },
+    {
+      "weekday": "Wednesday",
+      "n": 6787,
+      "median_points": 2,
+      "pct_ge_10": 8.09,
+      "pct_ge_100": 1.68
+    },
+    {
+      "weekday": "Thursday",
+      "n": 6519,
+      "median_points": 2,
+      "pct_ge_10": 8.15,
+      "pct_ge_100": 1.69
+    },
+    {
+      "weekday": "Friday",
+      "n": 5487,
+      "median_points": 2,
+      "pct_ge_10": 8.09,
+      "pct_ge_100": 1.62
+    },
+    {
+      "weekday": "Saturday",
+      "n": 4320,
+      "median_points": 2,
+      "pct_ge_10": 8.36,
+      "pct_ge_100": 1.94
+    }
+  ],
+  "weekend_vs_weekday": {
+    "weekend": {
+      "n": 8999,
+      "pct_ge_100": 2.04
+    },
+    "weekday": {
+      "n": 32829,
+      "pct_ge_100": 1.7
+    },
+    "z": 2.2
+  },
+  "front_page_tag": {
+    "show_hn_stories_tagged_front_page": 1,
+    "all_stories_tagged_front_page": 106,
+    "note": "The HN Search API has a `front_page` tag, but it is not a historical record: over this whole twelve-month window it returns the counts above, which is a tiny fraction of the stories that were actually on the front page during that year. It reflects the index at write time, so it cannot be used to compute a historical front-page rate."
+  },
+  "by_hour_utc": [
+    {
+      "hour_utc": 0,
+      "n": 1021,
+      "median_points": 2,
+      "pct_ge_100": 2.64
+    },
+    {
+      "hour_utc": 1,
+      "n": 925,
+      "median_points": 2,
+      "pct_ge_100": 1.08
+    },
+    {
+      "hour_utc": 2,
+      "n": 946,
+      "median_points": 2,
+      "pct_ge_100": 0.95
+    },
+    {
+      "hour_utc": 3,
+      "n": 850,
+      "median_points": 2,
+      "pct_ge_100": 1.06
+    },
+    {
+      "hour_utc": 4,
+      "n": 867,
+      "median_points": 2,
+      "pct_ge_100": 1.04
+    },
+    {
+      "hour_utc": 5,
+      "n": 902,
+      "median_points": 2,
+      "pct_ge_100": 2.11
+    },
+    {
+      "hour_utc": 6,
+      "n": 983,
+      "median_points": 2,
+      "pct_ge_100": 1.32
+    },
+    {
+      "hour_utc": 7,
+      "n": 1201,
+      "median_points": 2,
+      "pct_ge_100": 0.67
+    },
+    {
+      "hour_utc": 8,
+      "n": 1226,
+      "median_points": 2,
+      "pct_ge_100": 0.98
+    },
+    {
+      "hour_utc": 9,
+      "n": 1342,
+      "median_points": 2,
+      "pct_ge_100": 1.56
+    },
+    {
+      "hour_utc": 10,
+      "n": 1464,
+      "median_points": 2,
+      "pct_ge_100": 1.23
+    },
+    {
+      "hour_utc": 11,
+      "n": 1852,
+      "median_points": 2,
+      "pct_ge_100": 2.16
+    },
+    {
+      "hour_utc": 12,
+      "n": 2458,
+      "median_points": 2,
+      "pct_ge_100": 1.51
+    },
+    {
+      "hour_utc": 13,
+      "n": 3053,
+      "median_points": 2,
+      "pct_ge_100": 1.54
+    },
+    {
+      "hour_utc": 14,
+      "n": 3224,
+      "median_points": 2,
+      "pct_ge_100": 2.17
+    },
+    {
+      "hour_utc": 15,
+      "n": 3320,
+      "median_points": 2,
+      "pct_ge_100": 1.96
+    },
+    {
+      "hour_utc": 16,
+      "n": 3108,
+      "median_points": 2,
+      "pct_ge_100": 2.41
+    },
+    {
+      "hour_utc": 17,
+      "n": 2573,
+      "median_points": 2,
+      "pct_ge_100": 2.33
+    },
+    {
+      "hour_utc": 18,
+      "n": 2221,
+      "median_points": 2,
+      "pct_ge_100": 2.21
+    },
+    {
+      "hour_utc": 19,
+      "n": 2143,
+      "median_points": 2,
+      "pct_ge_100": 1.49
+    },
+    {
+      "hour_utc": 20,
+      "n": 1927,
+      "median_points": 2,
+      "pct_ge_100": 1.92
+    },
+    {
+      "hour_utc": 21,
+      "n": 1634,
+      "median_points": 2,
+      "pct_ge_100": 2.14
+    },
+    {
+      "hour_utc": 22,
+      "n": 1421,
+      "median_points": 2,
+      "pct_ge_100": 1.9
+    },
+    {
+      "hour_utc": 23,
+      "n": 1167,
+      "median_points": 2,
+      "pct_ge_100": 1.11
+    }
+  ],
+  "by_month": [
+    {
+      "month": "2025-07",
+      "n": 2567,
+      "median_points": 2,
+      "pct_ge_100": 2.38,
+      "ai_title_share_pct": 19.21,
+      "ai_pct_ge_100": 1.01,
+      "non_ai_pct_ge_100": 2.7
+    },
+    {
+      "month": "2025-08",
+      "n": 2518,
+      "median_points": 2,
+      "pct_ge_100": 2.22,
+      "ai_title_share_pct": 19.22,
+      "ai_pct_ge_100": 1.24,
+      "non_ai_pct_ge_100": 2.46
+    },
+    {
+      "month": "2025-09",
+      "n": 2208,
+      "median_points": 2,
+      "pct_ge_100": 1.63,
+      "ai_title_share_pct": 18.8,
+      "ai_pct_ge_100": 0,
+      "non_ai_pct_ge_100": 2.01
+    },
+    {
+      "month": "2025-10",
+      "n": 2396,
+      "median_points": 2,
+      "pct_ge_100": 2.38,
+      "ai_title_share_pct": 20.24,
+      "ai_pct_ge_100": 1.03,
+      "non_ai_pct_ge_100": 2.72
+    },
+    {
+      "month": "2025-11",
+      "n": 2616,
+      "median_points": 2,
+      "pct_ge_100": 1.64,
+      "ai_title_share_pct": 18.58,
+      "ai_pct_ge_100": 0,
+      "non_ai_pct_ge_100": 2.02
+    },
+    {
+      "month": "2025-12",
+      "n": 3523,
+      "median_points": 2,
+      "pct_ge_100": 1.53,
+      "ai_title_share_pct": 17.26,
+      "ai_pct_ge_100": 0.66,
+      "non_ai_pct_ge_100": 1.72
+    },
+    {
+      "month": "2026-01",
+      "n": 4764,
+      "median_points": 2,
+      "pct_ge_100": 1.64,
+      "ai_title_share_pct": 17.76,
+      "ai_pct_ge_100": 0.95,
+      "non_ai_pct_ge_100": 1.79
+    },
+    {
+      "month": "2026-02",
+      "n": 6222,
+      "median_points": 2,
+      "pct_ge_100": 1.3,
+      "ai_title_share_pct": 24.04,
+      "ai_pct_ge_100": 0.6,
+      "non_ai_pct_ge_100": 1.52
+    },
+    {
+      "month": "2026-03",
+      "n": 5446,
+      "median_points": 2,
+      "pct_ge_100": 1.32,
+      "ai_title_share_pct": 23.82,
+      "ai_pct_ge_100": 0.62,
+      "non_ai_pct_ge_100": 1.54
+    },
+    {
+      "month": "2026-04",
+      "n": 3433,
+      "median_points": 2,
+      "pct_ge_100": 2.45,
+      "ai_title_share_pct": 17.8,
+      "ai_pct_ge_100": 1.15,
+      "non_ai_pct_ge_100": 2.73
+    },
+    {
+      "month": "2026-05",
+      "n": 2654,
+      "median_points": 2,
+      "pct_ge_100": 2.15,
+      "ai_title_share_pct": 17.14,
+      "ai_pct_ge_100": 0.88,
+      "non_ai_pct_ge_100": 2.41
+    },
+    {
+      "month": "2026-06",
+      "n": 3481,
+      "median_points": 3,
+      "pct_ge_100": 1.81,
+      "ai_title_share_pct": 19.05,
+      "ai_pct_ge_100": 0.6,
+      "non_ai_pct_ge_100": 2.09
+    }
+  ],
+  "histogram": [
+    {
+      "from": 1,
+      "to": 1,
+      "n": 14646,
+      "pct": 35.01
+    },
+    {
+      "from": 2,
+      "to": 2,
+      "n": 11602,
+      "pct": 27.74
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "n": 8281,
+      "pct": 19.8
+    },
+    {
+      "from": 5,
+      "to": 9,
+      "n": 3788,
+      "pct": 9.06
+    },
+    {
+      "from": 10,
+      "to": 19,
+      "n": 1281,
+      "pct": 3.06
+    },
+    {
+      "from": 20,
+      "to": 49,
+      "n": 914,
+      "pct": 2.19
+    },
+    {
+      "from": 50,
+      "to": 99,
+      "n": 574,
+      "pct": 1.37
+    },
+    {
+      "from": 100,
+      "to": 199,
+      "n": 419,
+      "pct": 1
+    },
+    {
+      "from": 200,
+      "to": 499,
+      "n": 254,
+      "pct": 0.61
+    },
+    {
+      "from": 500,
+      "to": null,
+      "n": 69,
+      "pct": 0.16
+    }
+  ],
+  "top_25": [
+    {
+      "id": "46205632",
+      "title": "Show HN: Gemini Pro 3 imagines the HN front page 10 years from now",
+      "points": 3346,
+      "num_comments": 965,
+      "created_at": "2025-12-09T15:00:38Z",
+      "host": "dosaygo-studio.github.io"
+    },
+    {
+      "id": "46339600",
+      "title": "Show HN: Jmail – Google Suite for Epstein files",
+      "points": 1557,
+      "num_comments": 363,
+      "created_at": "2025-12-20T21:00:05Z",
+      "host": "jmail.world"
+    },
+    {
+      "id": "48490024",
+      "title": "Show HN: Homebrew 6.0.0",
+      "points": 1481,
+      "num_comments": 363,
+      "created_at": "2026-06-11T13:24:29Z",
+      "host": "brew.sh"
+    },
+    {
+      "id": "46721802",
+      "title": "Show HN: isometric.nyc – giant isometric pixel art map of NYC",
+      "points": 1325,
+      "num_comments": 241,
+      "created_at": "2026-01-22T16:52:35Z",
+      "host": "cannoneyed.com"
+    },
+    {
+      "id": "45900425",
+      "title": "Show HN: I built a synth for my daughter",
+      "points": 1278,
+      "num_comments": 209,
+      "created_at": "2025-11-12T14:12:13Z",
+      "host": "bitsnpieces.dev"
+    },
+    {
+      "id": "45231378",
+      "title": "Show HN: A store that generates products from anything you type in search",
+      "points": 1184,
+      "num_comments": 333,
+      "created_at": "2025-09-13T12:02:11Z",
+      "host": "anycrap.shop"
+    },
+    {
+      "id": "48445554",
+      "title": "Show HN: Performative-UI – A react component library of design tropes",
+      "points": 1181,
+      "num_comments": 213,
+      "created_at": "2026-06-08T14:05:16Z",
+      "host": "vorpus.github.io"
+    },
+    {
+      "id": "44787902",
+      "title": "Show HN: I spent 6 years building a ridiculous wooden pixel display",
+      "points": 1145,
+      "num_comments": 144,
+      "created_at": "2025-08-04T16:16:21Z",
+      "host": "benholmen.com"
+    },
+    {
+      "id": "45181535",
+      "title": "Show HN: Term.everything – Run any GUI app in the terminal",
+      "points": 1094,
+      "num_comments": 144,
+      "created_at": "2025-09-09T13:16:30Z",
+      "host": "github.com"
+    },
+    {
+      "id": "45154609",
+      "title": "Show HN: I recreated Windows XP as my portfolio",
+      "points": 1032,
+      "num_comments": 323,
+      "created_at": "2025-09-07T01:44:19Z",
+      "host": "mitchivin.com"
+    },
+    {
+      "id": "44664873",
+      "title": "Show HN: Tinder but it's only pictures of my wife and I can only swipe right",
+      "points": 1030,
+      "num_comments": 263,
+      "created_at": "2025-07-23T22:53:27Z",
+      "host": "trytender.app"
+    },
+    {
+      "id": "44807868",
+      "title": "Show HN: Kitten TTS – 25MB CPU-Only, Open-Source TTS Model",
+      "points": 1003,
+      "num_comments": 361,
+      "created_at": "2025-08-06T05:04:36Z",
+      "host": "github.com"
+    },
+    {
+      "id": "47640728",
+      "title": "Show HN: A game where you build a GPU",
+      "points": 964,
+      "num_comments": 187,
+      "created_at": "2026-04-04T16:45:54Z",
+      "host": "jaso1024.com"
+    },
+    {
+      "id": "44522683",
+      "title": "Show HN: Ten years of running every day, visualized",
+      "points": 958,
+      "num_comments": 495,
+      "created_at": "2025-07-10T16:21:13Z",
+      "host": "nodaysoff.run"
+    },
+    {
+      "id": "44719222",
+      "title": "Show HN: Draw a fish and watch it swim with the others",
+      "points": 935,
+      "num_comments": 234,
+      "created_at": "2025-07-29T04:57:22Z",
+      "host": "drawafish.com"
+    },
+    {
+      "id": "47655408",
+      "title": "Show HN: I built a tiny LLM to demystify how language models work",
+      "points": 915,
+      "num_comments": 134,
+      "created_at": "2026-04-06T00:20:12Z",
+      "host": "github.com"
+    },
+    {
+      "id": "44962066",
+      "title": "Show HN: I was curious about spherical helix, ended up making this visualization",
+      "points": 865,
+      "num_comments": 132,
+      "created_at": "2025-08-20T14:02:47Z",
+      "host": "visualrambling.space"
+    },
+    {
+      "id": "44716106",
+      "title": "Show HN: Use Their ID – Use your local UK MP’s ID for the Online Safety Act",
+      "points": 862,
+      "num_comments": 281,
+      "created_at": "2025-07-28T21:49:10Z",
+      "host": "use-their-id.com"
+    },
+    {
+      "id": "48673671",
+      "title": "Show HN: I made Google Trends for Hacker News by indexing 18 years of comments",
+      "points": 822,
+      "num_comments": 156,
+      "created_at": "2026-06-25T14:08:55Z",
+      "host": "hackernewstrends.com"
+    },
+    {
+      "id": "45777810",
+      "title": "Show HN: Strange Attractors",
+      "points": 804,
+      "num_comments": 78,
+      "created_at": "2025-10-31T23:23:59Z",
+      "host": "blog.shashanktomar.com"
+    },
+    {
+      "id": "44846281",
+      "title": "Show HN: The current sky at your approximate location, as a CSS gradient",
+      "points": 788,
+      "num_comments": 160,
+      "created_at": "2025-08-09T13:25:16Z",
+      "host": "sky.dlazaro.ca"
+    },
+    {
+      "id": "47673360",
+      "title": "Show HN: Brutalist Concrete Laptop Stand (2024)",
+      "points": 786,
+      "num_comments": 240,
+      "created_at": "2026-04-07T11:07:44Z",
+      "host": "sam-burns.com"
+    },
+    {
+      "id": "47625952",
+      "title": "Show HN: I built a frontpage for personal blogs",
+      "points": 783,
+      "num_comments": 195,
+      "created_at": "2026-04-03T12:33:45Z",
+      "host": "text.blogosphere.app"
+    },
+    {
+      "id": "46093473",
+      "title": "Show HN: Boing",
+      "points": 782,
+      "num_comments": 147,
+      "created_at": "2025-11-30T03:46:35Z",
+      "host": "boing.greg.technology"
+    },
+    {
+      "id": "45438346",
+      "title": "Show HN: Autism Simulator",
+      "points": 779,
+      "num_comments": 857,
+      "created_at": "2025-10-01T14:48:31Z",
+      "host": "autism-simulator.vercel.app"
+    }
+  ],
+  "caveats": [
+    "The HN Search API records points and comment counts. It has a `front_page` tag, but that tag is a snapshot of the index, not history — see front_page_tag for what it actually returns over this window. No historical front-page rate can be computed from this API, so nothing here claims to measure one.",
+    "These are stories, not people: see authors.distinct. The one-submission-only sub-sample is reported alongside so the headline can be checked against a de-duplicated population.",
+    "The \"AI in title\" test is case-insensitive, so a lowercase \".ai\" domain in a title counts as saying AI. It is an association, not a cause: what gets titled \"AI\" is not a random sample of projects.",
+    "Points are read once, at measurement time. A story keeps accumulating votes for a while after posting, which is why the window ends four weeks before the measurement date.",
+    "Every HN story starts at 1 point (the submitter's own vote), so \"1 point\" is the floor, not a zero.",
+    "Weekday and hour are UTC. Hacker News traffic follows US hours, so a UTC weekday bucket straddles two US days at the edges.",
+    "Stories deleted or moderated away between posting and measurement are absent from the index and therefore absent here.",
+    "The \"AI in title\" split is a title-text test, not a judgement about what the project is. A project about AI whose title never says so lands in the \"without\" bucket."
+  ]
+}
