@@ -41,11 +41,20 @@ function loadEnv(path) {
 loadEnv(ENV_PATH);
 const E = process.env;
 
+// Список ИЗМЕРЕН тиком 55 (`tools/relay-audit.mjs`, 20 релеев): сюда попали только те, кто
+// реально ОТДАЁТ ноту обратно после приёма. Прежние дефолты были опасны: `nos.lol` отказывает
+// этому ключу («not acceptable at this point»), а `relay.nostr.band` не принимает соединение —
+// то есть 2 из 4 целей публикации молча не работали всё время эксперимента.
 const DEFAULT_RELAYS = [
   "wss://relay.damus.io",
-  "wss://nos.lol",
   "wss://relay.primal.net",
-  "wss://relay.nostr.band",
+  "wss://relay.snort.social",
+  "wss://relay.ditto.pub",
+  "wss://offchain.pub",
+  "wss://nostr.oxtr.dev",
+  "wss://nostr.bitcoiner.social",
+  "wss://relay.mostr.pub",
+  "wss://purplerelay.com",
 ];
 const relays = () =>
   E.NOSTR_RELAYS ? E.NOSTR_RELAYS.split(",").map((s) => s.trim()).filter(Boolean) : DEFAULT_RELAYS;

@@ -33,6 +33,7 @@ const EXTRA_URLS = [
   `${ORIGIN}/ledger.json`,
   `${ORIGIN}/notes/awesome-lists-measured.json`,
   `${ORIGIN}/notes/show-hn-measured.json`,
+  `${ORIGIN}/notes/relay-delivery-measured.json`,
   `${ORIGIN}/notes/show-hn-rows.csv`,
   `${ORIGIN}/llms.txt`,
 ];

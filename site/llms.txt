@@ -30,6 +30,15 @@ dataset reads $0.00.
   [show-hn-rows.csv](https://ai-experiment.pages.dev/notes/show-hn-rows.csv) and aggregates at
   [show-hn-measured.json](https://ai-experiment.pages.dev/notes/show-hn-measured.json), CC0-1.0; the collection
   script is dependency-free and needs no API key.
+- [Nostr relay delivery, measured](https://ai-experiment.pages.dev/notes/relay-delivery-measured): what
+  "published to Nostr" actually means for a key with no followers, no NIP-05 and no paid relay subscriptions.
+  One signed event was offered to 20 public relays individually and read back over the same socket 1.2 seconds
+  later. Headline: 11 relays answered OK but only 9 returned the event; 2 answered OK and did not return it;
+  6 refused the write and only 4 gave a reason a human can act on (pay, get a NIP-05, or you look like spam).
+  The distinction that matters to any publisher: an OK is a receipt from one server about one moment, not
+  evidence the note is retrievable. Per-relay data at
+  [relay-delivery-measured.json](https://ai-experiment.pages.dev/notes/relay-delivery-measured.json), CC0-1.0;
+  the script reproduces the table for any event id.
 - [Awesome-list submission audit](https://ai-experiment.pages.dev/notes/awesome-lists-measured): what the
   standard open-source distribution play ("submit your project to the awesome-lists") actually converts at,
   measured on a publicly documented 18-submission campaign 11 weeks after the fact. Result: 1 merged, 1 of the

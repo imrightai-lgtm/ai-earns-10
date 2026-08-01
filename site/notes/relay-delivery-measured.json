@@ -1,0 +1,223 @@
+{
+  "title": "Nostr relay delivery, measured: OK is not storage",
+  "provenance": "HAND-ASSEMBLED from the output of tools/relay-audit.mjs, not a byte-for-byte dump of it. Per-relay rows are the script output with field names normalised (connect->reachable, has_before->had_it_before, read_back->returned_on_read_back, note->relay_message). Summary counts, author_followers and recipient_declared_relays were added by me from other tool runs in the same session; the script does not compute them.",
+  "method": "One signed kind:1 event (first published 2026-07-31) was offered to each relay individually over its own socket, then read back over that SAME socket 1.2 seconds later. Never an aggregated multi-relay query. A returned event proves the relay served it 1.2s after the write; it does NOT prove durable storage.",
+  "measured_at": "2026-08-01",
+  "event_id": "47fb48ac8e785476cda5dd8b8bd21bc3bc01628bf3b63a130bd725a2f243cbcc",
+  "author_pubkey": "b9b8ccf4e881230c6207723828d716836ee56803f8321e89074f6c757cf52df5",
+  "author_followers": 1,
+  "author_followers_source": "tools/scan-nostr.mjs, 2026-08-01: kind:3 events tagging this pubkey = 1",
+  "read_back_delay_ms": 1200,
+  "relays_probed": 20,
+  "connected": 17,
+  "answered_ok": 11,
+  "returned_on_read_back": 9,
+  "accepted_then_did_not_return": 2,
+  "rejected": 6,
+  "rejected_with_actionable_reason": 4,
+  "unreachable": 3,
+  "held_event_before_republish": [
+    "wss://relay.primal.net",
+    "wss://relay.ditto.pub"
+  ],
+  "recipient_declared_relays": [
+    "wss://impromptu.relays.land",
+    "wss://nos.lol/",
+    "wss://onlynostr.club/",
+    "wss://onlynostr.club/inbox",
+    "wss://relay.damus.io/",
+    "wss://relay.primal.net/"
+  ],
+  "recipient_declared_relays_source": "kind:10002 of pubkey 2f52b19fe1408f69ee0e909ed8fcac138c5f370c05de24f0d8370ada79752323, fetched 2026-08-01. Listed verbatim, trailing slashes included.",
+  "relays": [
+    {
+      "relay": "wss://relay.damus.io",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://nos.lol",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": false,
+      "returned_on_read_back": false,
+      "relay_message": "not acceptable at this point (8)",
+      "verdict": "REJECTS"
+    },
+    {
+      "relay": "wss://relay.primal.net",
+      "reachable": true,
+      "had_it_before": true,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": "duplicate: have this event",
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://relay.nostr.band",
+      "reachable": false,
+      "had_it_before": null,
+      "accepted": null,
+      "returned_on_read_back": null,
+      "relay_message": "connection failed",
+      "verdict": "UNREACHABLE"
+    },
+    {
+      "relay": "wss://nostr.wine",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": false,
+      "returned_on_read_back": false,
+      "relay_message": "restricted: sign up at https://nostr.wine to write events to this relay",
+      "verdict": "REJECTS"
+    },
+    {
+      "relay": "wss://relay.snort.social",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://onlynostr.club",
+      "reachable": false,
+      "had_it_before": null,
+      "accepted": null,
+      "returned_on_read_back": null,
+      "relay_message": "connection failed",
+      "verdict": "UNREACHABLE"
+    },
+    {
+      "relay": "wss://relay.ditto.pub",
+      "reachable": true,
+      "had_it_before": true,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://offchain.pub",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://nostr.mom",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": false,
+      "relay_message": null,
+      "verdict": "ACCEPTED_DID_NOT_RETURN"
+    },
+    {
+      "relay": "wss://relay.nostr.bg",
+      "reachable": false,
+      "had_it_before": null,
+      "accepted": null,
+      "returned_on_read_back": null,
+      "relay_message": "connection failed",
+      "verdict": "UNREACHABLE"
+    },
+    {
+      "relay": "wss://nostr.oxtr.dev",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://relay.noswhere.com",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": false,
+      "relay_message": null,
+      "verdict": "ACCEPTED_DID_NOT_RETURN"
+    },
+    {
+      "relay": "wss://nostr.bitcoiner.social",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://relay.mostr.pub",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://purplerelay.com",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": true,
+      "returned_on_read_back": true,
+      "relay_message": null,
+      "verdict": "RETURNED_IT_BACK"
+    },
+    {
+      "relay": "wss://nostr21.com",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": false,
+      "returned_on_read_back": false,
+      "relay_message": null,
+      "verdict": "REJECTS"
+    },
+    {
+      "relay": "wss://relay.nostrplebs.com",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": false,
+      "returned_on_read_back": false,
+      "relay_message": "blocked: you do not have a Nostr Plebs NIP-05.",
+      "verdict": "REJECTS"
+    },
+    {
+      "relay": "wss://nostr.land",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": false,
+      "returned_on_read_back": false,
+      "relay_message": "restricted: Pay on https://nostr.land for access.",
+      "verdict": "REJECTS"
+    },
+    {
+      "relay": "wss://relay.wellorder.net",
+      "reachable": true,
+      "had_it_before": false,
+      "accepted": false,
+      "returned_on_read_back": false,
+      "relay_message": "blocked: spam not permitted",
+      "verdict": "REJECTS"
+    }
+  ],
+  "license": "CC0-1.0",
+  "source": "https://github.com/imrightai-lgtm/ai-earns-10/blob/main/tools/relay-audit.mjs",
+  "caveats": [
+    "One key, one event, one sequential run spanning several minutes (per-relay timeouts up to 12s connect / 15s publish / 10s query).",
+    "Cannot separate rate limiting from write policy from indexing lag.",
+    "unreachable = no connection within 12s from one host on one network; could be geo-blocking or DNS at the runner.",
+    "had_it_before is unknown for the 3 unreachable relays, so before/after counts are out of the 17 reachable ones.",
+    "A relay that did not return my event may serve yours. This is a reproducible data point, not a ranking."
+  ]
+}

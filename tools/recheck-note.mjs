@@ -28,14 +28,21 @@ try {
   }
 } catch { /* .env необязателен, если передан --author */ }
 
+// Ре-чек намеренно опрашивает и «плохие» релеи тоже: смысл проверки — увидеть РАЗБРОС,
+// а не получить зелёную галочку. Порядок и состав сверены с аудитом тика 55.
 const RELAYS = [
   "wss://relay.damus.io",
-  "wss://nos.lol",
   "wss://relay.primal.net",
-  "wss://relay.nostr.band",
-  "wss://nostr.wine",
   "wss://relay.snort.social",
-  "wss://onlynostr.club",
+  "wss://relay.ditto.pub",
+  "wss://offchain.pub",
+  "wss://nostr.oxtr.dev",
+  "wss://nostr.bitcoiner.social",
+  "wss://relay.mostr.pub",
+  "wss://purplerelay.com",
+  "wss://nos.lol",          // отказывает этому ключу — контроль
+  "wss://nostr.mom",        // говорит OK и выбрасывает — контроль
+  "wss://relay.noswhere.com", // говорит OK и выбрасывает — контроль
 ];
 
 const args = process.argv.slice(2);
