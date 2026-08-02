@@ -20,6 +20,8 @@
 //   node tools/relay-audit.mjs <id> --json <path>          — сохранить машиночитаемый результат
 //   node tools/relay-audit.mjs <id> --relays a,b,c         — целевая доставка на конкретные релеи
 //                                                            (например, объявленные адресатом в kind:10002)
+//   node tools/relay-audit.mjs <id> --attempts N           — N попыток соединения перед вердиктом
+//                                                            UNREACHABLE (1..5, по умолчанию 1)
 //
 // Зависимости: nostr-tools. Приватный ключ НЕ нужен и НЕ читается: евент уже подписан.
 
@@ -43,6 +45,10 @@ if (!EVENT_ID) {
 
 const relaysIdx = args.indexOf("--relays");
 const CUSTOM = relaysIdx >= 0 ? args[relaysIdx + 1] : null;
+
+// Сколько раз пробовать соединиться, прежде чем записать релей в UNREACHABLE (см. тик 56).
+const attIdx = args.indexOf("--attempts");
+const ATTEMPTS = Math.max(1, Math.min(5, attIdx >= 0 ? parseInt(args[attIdx + 1], 10) || 1 : 1));
 
 // Широкий список публичных релеев. Цель — не «побольше», а измерить, кто РЕАЛЬНО хранит.
 const DEFAULT_RELAYS = [
@@ -103,7 +109,7 @@ console.log(
 // --- 2. По одному релею: has_before → publish → read_back ---
 const results = [];
 
-for (const url of RELAYS) {
+async function probe(url) {
   const row = { relay: url, connect: false, has_before: null, accepted: null, note: "", read_back: null, verdict: "" };
   let relay = null;
   try {
@@ -111,19 +117,42 @@ for (const url of RELAYS) {
     if (!relay) throw new Error("timeout при подключении");
     row.connect = true;
 
-    // 2a. лежит ли уже
+    // 2a. лежит ли уже.
+    // ВАЖНО (найдено критиком на тике 56): раньше таймаут запроса и честный пустой ответ
+    // давали ОДИН И ТОТ ЖЕ вердикт NOT-THERE — то есть «релей сказал: нет» было неотличимо
+    // от «релей молчал 10 секунд». На этом держался вывод статьи, поэтому теперь различаем:
+    //   EOSE + 0 событий  -> релей ЯВНО ответил, что евента нет  (has_before=false, eose=true)
+    //   CLOSED <причина>  -> релей отказал в чтении (например auth-required)
+    //   таймаут           -> ответа не было вовсе                (has_before=null, eose=false)
     const before = await race(
       new Promise((res) => {
         const acc = [];
         const sub = relay.subscribe([{ ids: [EVENT_ID] }], {
           onevent: (e) => acc.push(e),
-          oneose: () => { try { sub.close(); } catch {} res(acc); },
+          // ПОРЯДОК ВАЖЕН: сначала res(eose), потом close(). sub.close() синхронно дёргает
+          // onclose («closed by caller»), и если резолвить после закрытия, то ЧЕСТНЫЙ EOSE
+          // приходит в промис как «релей закрыл подписку» — ровно та подмена, которую
+          // этот код и должен устранять.
+          oneose: () => { res({ kind: "eose", events: acc }); try { sub.close(); } catch {} },
+          onclose: (reason) => res({ kind: "closed", events: acc, reason: String(reason ?? "") }),
         });
       }),
       10000,
       null
     );
-    row.has_before = before === null ? null : before.length > 0;
+    if (before === null) {
+      row.has_before = null;
+      row.read_answered = false;
+      row.read_note = "таймаут: релей не прислал ни EOSE, ни CLOSED за 10 с";
+    } else if (before.kind === "closed" && !before.events.length) {
+      row.has_before = null;
+      row.read_answered = false;
+      row.read_note = "релей закрыл подписку: " + (before.reason || "без причины").slice(0, 120);
+    } else {
+      row.has_before = before.events.length > 0;
+      row.read_answered = true;
+      row.read_note = before.events.length ? "" : "EOSE без событий: релей явно ответил, что евента нет";
+    }
 
     // 2b. отправка того же подписанного евента
     if (!DRY) {
@@ -156,21 +185,41 @@ for (const url of RELAYS) {
   } finally {
     try { relay?.close(); } catch {}
   }
+  return row;
+}
+
+for (const url of RELAYS) {
+  // Одиночный проход НЕДООЦЕНИВАЕТ мир: тик 56 записал `relay.damus.io` как UNREACHABLE в общем
+  // прогоне по 20 релеям, а две прицельные повторные попытки подряд нашли на нём евент. Отказ
+  // соединения бывает мгновенным и случайным, поэтому вердикт UNREACHABLE выносится только после
+  // ATTEMPTS неудачных попыток, и в результат пишется, сколько их понадобилось.
+  let row = null;
+  let used = 0;
+  for (let i = 1; i <= ATTEMPTS; i++) {
+    used = i;
+    row = await probe(url);
+    if (row.connect) break;
+    if (i < ATTEMPTS) await T(1500);
+  }
+  row.connect_attempts = used;
 
   // --- вердикт ---
   if (!row.connect) row.verdict = "UNREACHABLE";
-  else if (DRY) row.verdict = row.has_before ? "HAS-IT" : "NOT-THERE";
+  // NO-ANSWER ≠ NOT-THERE: второе — заявление релея, первое — его молчание. Смешивать нельзя.
+  else if (DRY) row.verdict = row.has_before === null ? "NO-ANSWER" : row.has_before ? "HAS-IT" : "NOT-THERE";
   else if (row.accepted === false) row.verdict = "REJECTS";
   else if (row.read_back === true) row.verdict = "STORES";
   else if (row.accepted === true && row.read_back === false) row.verdict = "ACCEPTS-BUT-DROPS";
   else row.verdict = "UNCLEAR";
 
-  const icon = { STORES: "✓", "ACCEPTS-BUT-DROPS": "✗", REJECTS: "·", UNREACHABLE: "·", UNCLEAR: "?", "HAS-IT": "✓", "NOT-THERE": "·" }[row.verdict] || "?";
+  const icon = { STORES: "✓", "ACCEPTS-BUT-DROPS": "✗", REJECTS: "·", UNREACHABLE: "·", UNCLEAR: "?", "HAS-IT": "✓", "NOT-THERE": "·", "NO-ANSWER": "?" }[row.verdict] || "?";
   console.log(
     `${icon} ${url.padEnd(32)} было:${row.has_before === null ? "?" : row.has_before ? "да" : "нет"}` +
       ` принял:${row.accepted === null ? "-" : row.accepted ? "да" : "НЕТ"}` +
       ` отдал:${row.read_back === null ? "-" : row.read_back ? "да" : "НЕТ"}` +
-      `  ${row.verdict}${row.note ? "  :: " + row.note : ""}`
+      `  ${row.verdict}${row.connect_attempts > 1 ? ` (попыток: ${row.connect_attempts})` : ""}` +
+      `${row.read_note ? "  :: " + row.read_note : ""}` +
+      `${row.note ? "  :: " + row.note : ""}`
   );
   results.push(row);
 }

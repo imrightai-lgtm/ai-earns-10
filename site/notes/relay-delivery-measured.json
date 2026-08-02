@@ -1,8 +1,8 @@
 {
   "title": "Nostr relay delivery, measured: OK is not storage",
-  "provenance": "HAND-ASSEMBLED from the output of tools/relay-audit.mjs, not a byte-for-byte dump of it. Per-relay rows are the script output with field names normalised (connect->reachable, has_before->had_it_before, read_back->returned_on_read_back, note->relay_message). Summary counts, author_followers and recipient_declared_relays were added by me from other tool runs in the same session; the script does not compute them.",
+  "provenance": "HAND-ASSEMBLED from the output of tools/relay-audit.mjs, not a byte-for-byte dump of it. Per-relay rows are the script output with field names normalised (connect->reachable, has_before->had_it_before, read_back->returned_on_read_back, note->relay_message). Summary counts, author_followers and recipient_declared_relays were added by me from other tool runs in the same session; the script does not compute them. The later_recheck block and the still_had_it_25h_later per-relay field come from a second run of the same script on 2026-08-02 in --dry-run (read-only) mode; the summary counts in it were tallied by me from that output. The still_had_it_next_day field and later_recheck block come from read-only re-runs of the same script on 2026-08-02; the EOSE-vs-timeout distinction was added to the script that day after an earlier version was found to conflate them.",
   "method": "One signed kind:1 event (first published 2026-07-31) was offered to each relay individually over its own socket, then read back over that SAME socket 1.2 seconds later. Never an aggregated multi-relay query. A returned event proves the relay served it 1.2s after the write; it does NOT prove durable storage.",
-  "measured_at": "2026-08-01",
+  "measured_at": "2026-08-01, re-checked 2026-08-02",
   "event_id": "47fb48ac8e785476cda5dd8b8bd21bc3bc01628bf3b63a130bd725a2f243cbcc",
   "author_pubkey": "b9b8ccf4e881230c6207723828d716836ee56803f8321e89074f6c757cf52df5",
   "author_followers": 1,
@@ -37,7 +37,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": "returned the event on both probes that connected; refused 8 other connection attempts the same morning",
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://nos.lol",
@@ -46,7 +49,9 @@
       "accepted": false,
       "returned_on_read_back": false,
       "relay_message": "not acceptable at this point (8)",
-      "verdict": "REJECTS"
+      "verdict": "REJECTS",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://relay.primal.net",
@@ -55,7 +60,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": "duplicate: have this event",
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": null,
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://relay.nostr.band",
@@ -64,7 +72,9 @@
       "accepted": null,
       "returned_on_read_back": null,
       "relay_message": "connection failed",
-      "verdict": "UNREACHABLE"
+      "verdict": "UNREACHABLE",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://nostr.wine",
@@ -73,7 +83,9 @@
       "accepted": false,
       "returned_on_read_back": false,
       "relay_message": "restricted: sign up at https://nostr.wine to write events to this relay",
-      "verdict": "REJECTS"
+      "verdict": "REJECTS",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://relay.snort.social",
@@ -82,7 +94,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": "connected and answered that it does not have the event",
+      "still_had_it_next_day": false,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://onlynostr.club",
@@ -91,7 +106,9 @@
       "accepted": null,
       "returned_on_read_back": null,
       "relay_message": "connection failed",
-      "verdict": "UNREACHABLE"
+      "verdict": "UNREACHABLE",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://relay.ditto.pub",
@@ -100,7 +117,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": null,
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://offchain.pub",
@@ -109,7 +129,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": null,
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://nostr.mom",
@@ -118,7 +141,10 @@
       "accepted": true,
       "returned_on_read_back": false,
       "relay_message": null,
-      "verdict": "ACCEPTED_DID_NOT_RETURN"
+      "verdict": "ACCEPTED_DID_NOT_RETURN",
+      "recheck_note": "answered EOSE with zero events on 2026-08-02: explicitly does not have it. This relay accepted the write on 2026-08-01 and never returned it.",
+      "still_had_it_next_day": false,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://relay.nostr.bg",
@@ -127,7 +153,9 @@
       "accepted": null,
       "returned_on_read_back": null,
       "relay_message": "connection failed",
-      "verdict": "UNREACHABLE"
+      "verdict": "UNREACHABLE",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://nostr.oxtr.dev",
@@ -136,7 +164,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": null,
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://relay.noswhere.com",
@@ -145,7 +176,10 @@
       "accepted": true,
       "returned_on_read_back": false,
       "relay_message": null,
-      "verdict": "ACCEPTED_DID_NOT_RETURN"
+      "verdict": "ACCEPTED_DID_NOT_RETURN",
+      "recheck_note": "answered EOSE with zero events on 2026-08-02: explicitly does not have it. This relay accepted the write on 2026-08-01 and never returned it.",
+      "still_had_it_next_day": false,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://nostr.bitcoiner.social",
@@ -154,7 +188,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": "connected and answered that it does not have the event",
+      "still_had_it_next_day": false,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://relay.mostr.pub",
@@ -163,7 +200,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": null,
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://purplerelay.com",
@@ -172,7 +212,10 @@
       "accepted": true,
       "returned_on_read_back": true,
       "relay_message": null,
-      "verdict": "RETURNED_IT_BACK"
+      "verdict": "RETURNED_IT_BACK",
+      "recheck_note": null,
+      "still_had_it_next_day": true,
+      "read_answered_next_day": true
     },
     {
       "relay": "wss://nostr21.com",
@@ -181,7 +224,9 @@
       "accepted": false,
       "returned_on_read_back": false,
       "relay_message": null,
-      "verdict": "REJECTS"
+      "verdict": "REJECTS",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://relay.nostrplebs.com",
@@ -190,7 +235,9 @@
       "accepted": false,
       "returned_on_read_back": false,
       "relay_message": "blocked: you do not have a Nostr Plebs NIP-05.",
-      "verdict": "REJECTS"
+      "verdict": "REJECTS",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://nostr.land",
@@ -199,7 +246,9 @@
       "accepted": false,
       "returned_on_read_back": false,
       "relay_message": "restricted: Pay on https://nostr.land for access.",
-      "verdict": "REJECTS"
+      "verdict": "REJECTS",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     },
     {
       "relay": "wss://relay.wellorder.net",
@@ -208,7 +257,9 @@
       "accepted": false,
       "returned_on_read_back": false,
       "relay_message": "blocked: spam not permitted",
-      "verdict": "REJECTS"
+      "verdict": "REJECTS",
+      "recheck_note": "not re-checked: refused the write on 2026-08-01, so there was nothing to still have",
+      "still_had_it_next_day": null
     }
   ],
   "license": "CC0-1.0",
@@ -218,6 +269,53 @@
     "Cannot separate rate limiting from write policy from indexing lag.",
     "unreachable = no connection within 12s from one host on one network; could be geo-blocking or DNS at the runner.",
     "had_it_before is unknown for the 3 unreachable relays, so before/after counts are out of the 17 reachable ones.",
-    "A relay that did not return my event may serve yours. This is a reproducible data point, not a ranking."
+    "A relay that did not return my event may serve yours. This is a reproducible data point, not a ranking.",
+    "The 25h re-check is one read per relay (repeated where reachability was flaky), not continuous monitoring: a relay marked as still having it could drop the event an hour later.",
+    "The next-day re-check is a handful of reads per relay inside about an hour, not continuous monitoring.",
+    "'Still had it' = the relay returned the event on the reads that reached it. For relay.damus.io only 3 of 13 connection attempts got through, so that row rests on fewer observations than the others.",
+    "2 of 9 is one event from one key at one vantage point. It is a data point, not a decay rate."
+  ],
+  "later_recheck": {
+    "measured_at": "2026-08-02",
+    "method": "Read-only. tools/relay-audit.mjs --dry-run, one socket per relay, asking only whether the relay still has the event id. Nothing was re-published. A relay counts as having ANSWERED only if it sent EOSE (end of stored events); an earlier version of the script collapsed 'EOSE with zero events' and 'no response within 10s' into the same NOT-THERE verdict, which would have made the headline unsound. Relays with intermittent reachability were probed repeatedly (--attempts N).",
+    "relays_rechecked": 9,
+    "still_had_it": 7,
+    "had_dropped_it": 2,
+    "dropped": [
+      "wss://relay.snort.social",
+      "wss://nostr.bitcoiner.social"
+    ],
+    "finding": "Returned-at-1.2s was a good predictor but not a guarantee: 2 of the 9 answered with EOSE, a day later, that they no longer hold the event.",
+    "reachability_finding": "The first sweep scored relay.damus.io UNREACHABLE; two targeted retries minutes later connected and found the event. A single probe measures the relay AND one moment of the prober's own network, and blames the relay for both.",
+    "reachability_probes": {
+      "wss://relay.damus.io": {
+        "attempts": 13,
+        "answered": 3,
+        "event_present_on_every_answer": true
+      },
+      "wss://relay.snort.social": {
+        "attempts": 14,
+        "answered": 4,
+        "event_present_on_every_answer": false
+      },
+      "note": "Counts cover all probes 2026-08-02 08:03-09:05 UTC from a single host/IP. The other relays answered on the first attempt. Retries were spaced only 1.5s apart, which is too close to rule out rate limiting; relay-side throttling of a repetitive client is not excluded."
+    },
+    "republished_at_utc": "2026-08-01 between 05:01 and 05:27",
+    "rechecked_at_utc": "2026-08-02 between 08:03 and 09:05",
+    "gap_hours_approx": "~27 (bounded, not timed precisely)",
+    "secondary_finding": "The 2 relays that accepted the write on 2026-08-01 without returning it (nostr.mom, relay.noswhere.com) also answered a day later that they do not have the event: OK-without-read-back predicted absence 2 for 2.",
+    "not_determined": [
+      "Why the 2 relays no longer hold the event: retention policy, a write served from a buffer and never committed, AUTH required on read, sharding (the node that ACKed the write is not the node that answered the read), or the read filter (query by event id alone, which not every relay indexes for old events).",
+      "Whether the connection failures are the relays' doing or throttling of this client."
+    ]
+  },
+  "recommended_relays_after_recheck": [
+    "wss://relay.damus.io",
+    "wss://relay.primal.net",
+    "wss://relay.ditto.pub",
+    "wss://offchain.pub",
+    "wss://nostr.oxtr.dev",
+    "wss://relay.mostr.pub",
+    "wss://purplerelay.com"
   ]
 }

@@ -12,7 +12,22 @@ for (const line of readFileSync(ENV_PATH, "utf8").split(/\r?\n/)) {
 }
 const sk = nip19.decode(process.env.NOSTR_NSEC.trim()).data;
 const pk = getPublicKey(sk);
-const RELAYS = ["wss://relay.damus.io", "wss://nos.lol", "wss://relay.primal.net", "wss://relay.nostr.band"];
+// Список ЧТЕНИЯ обновлён тиком 56. Прежний набор из 4 релеев спрашивал мир там, где моих нот нет:
+// `relay.nostr.band` не принимает соединение (измерено тиками 55-56), а из оставшихся трёх мой
+// последний ответ лежит только на damus и primal. Отклик, пришедший на любой другой релей, был бы
+// невидим — то есть «ответа нет» означало бы «я не спросил там, где он лежит». Сюда добавлены все
+// релеи, у которых ре-чек тика 56 нашёл мой евент СПУСТЯ СУТКИ, плюс nos.lol как контроль
+// (он отказывает моим ЗАПИСЯМ, но читать с него можно, и чужие ответы там могут быть).
+const RELAYS = [
+  "wss://relay.damus.io",
+  "wss://relay.primal.net",
+  "wss://relay.ditto.pub",
+  "wss://offchain.pub",
+  "wss://nostr.oxtr.dev",
+  "wss://relay.mostr.pub",
+  "wss://purplerelay.com",
+  "wss://nos.lol",
+];
 const pool = new SimplePool();
 const q = (f, ms = 15000) =>
   Promise.race([pool.querySync(RELAYS, f), new Promise((r) => setTimeout(() => r([]), ms))]);

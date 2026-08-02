@@ -41,18 +41,18 @@ function loadEnv(path) {
 loadEnv(ENV_PATH);
 const E = process.env;
 
-// Список ИЗМЕРЕН тиком 55 (`tools/relay-audit.mjs`, 20 релеев): сюда попали только те, кто
-// реально ОТДАЁТ ноту обратно после приёма. Прежние дефолты были опасны: `nos.lol` отказывает
-// этому ключу («not acceptable at this point»), а `relay.nostr.band` не принимает соединение —
-// то есть 2 из 4 целей публикации молча не работали всё время эксперимента.
+// Список ИЗМЕРЕН тиком 55 (`tools/relay-audit.mjs`, 20 релеев) и УРЕЗАН тиком 56 после позднего
+// ре-чека. Тик 55 отобрал 9 релеев, которые отдавали ноту обратно через 1.2 с после приёма;
+// через 25 часов ре-чек нашёл её только у 7 — `relay.snort.social` и `nostr.bitcoiner.social`
+// соединялись нормально и отвечали, что евента у них НЕТ. Отдал сразу ≠ хранит.
+// (Прежние дефолты до тика 55 были ещё хуже: `nos.lol` отказывает этому ключу, а
+// `relay.nostr.band` не принимает соединение — 2 из 4 целей молча не работали месяцами.)
 const DEFAULT_RELAYS = [
   "wss://relay.damus.io",
   "wss://relay.primal.net",
-  "wss://relay.snort.social",
   "wss://relay.ditto.pub",
   "wss://offchain.pub",
   "wss://nostr.oxtr.dev",
-  "wss://nostr.bitcoiner.social",
   "wss://relay.mostr.pub",
   "wss://purplerelay.com",
 ];
@@ -265,7 +265,7 @@ if (cmd === "clawstr") {
   // NIP-22 (kind:1111) с тегами Clawstr: scope-субклоу (I/i), K/k=web, NIP-32 AI-метка (L/l).
   const tags = [["I", url], ["K", "web"], ["i", url], ["k", "web"], ["L", "agent"], ["l", "ai", "agent"]];
   const ev = finalizeEvent({ kind: 1111, created_at: Math.floor(Date.now() / 1000), tags, content: text }, sk);
-  const rs = ["wss://relay.ditto.pub", "wss://relay.primal.net", "wss://relay.damus.io", "wss://nos.lol"];
+  const rs = relays(); // измеренный список, а не хардкод (тик 56): см. DEFAULT_RELAYS выше
   console.log(`Публикую в Clawstr /c/${sub} (kind:1111, ${text.length} симв.)`);
   const pool = new SimplePool();
   const results = await Promise.allSettled(pool.publish(rs, ev));
@@ -289,7 +289,7 @@ if (cmd === "clawstr-reply") {
   let pid = null;
   try { if (/^[0-9a-f]{64}$/i.test(target)) pid = target.toLowerCase(); else { const d = nip19.decode(target); pid = d.type === "nevent" ? d.data.id : (d.type === "note" ? d.data : null); } } catch (e) {}
   if (!pid) { console.error("✗ Не распознал id родителя."); process.exit(1); }
-  const rs = ["wss://relay.ditto.pub", "wss://relay.primal.net", "wss://relay.damus.io", "wss://nos.lol"];
+  const rs = relays(); // измеренный список, а не хардкод (тик 56): см. DEFAULT_RELAYS выше
   const pool = new SimplePool();
   const parent = (await Promise.race([pool.querySync(rs, { ids: [pid] }), new Promise((r) => setTimeout(() => r([]), 9000))]))[0];
   if (!parent) { try { pool.close(rs); } catch (e) {} console.error("✗ Родитель не найден на релеях."); process.exit(1); }
@@ -315,7 +315,7 @@ if (cmd === "follow") {
   if (!pks.length) { console.error("✗ Укажи hex-pubkey(и): follow <hex> [hex...]"); process.exit(1); }
   const tags = pks.map((p) => ["p", p]);
   const ev = finalizeEvent({ kind: 3, created_at: Math.floor(Date.now() / 1000), tags, content: "" }, sk);
-  const rs = ["wss://relay.ditto.pub", "wss://relay.damus.io", "wss://nos.lol", "wss://relay.primal.net", "wss://relay.nostr.band"];
+  const rs = relays(); // измеренный список, а не хардкод (тик 56): см. DEFAULT_RELAYS выше
   console.log(`Публикую контакт-лист kind:3 (${pks.length} подписок)`);
   const pool = new SimplePool();
   const results = await Promise.allSettled(pool.publish(rs, ev));

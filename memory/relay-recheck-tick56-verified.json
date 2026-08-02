@@ -1,0 +1,69 @@
+{
+  "event_id": "47fb48ac8e785476cda5dd8b8bd21bc3bc01628bf3b63a130bd725a2f243cbcc",
+  "pubkey": "b9b8ccf4e881230c6207723828d716836ee56803f8321e89074f6c757cf52df5",
+  "kind": 1,
+  "created_at": 1785494587,
+  "dry_run": true,
+  "relays": [
+    {
+      "relay": "wss://relay.snort.social",
+      "connect": true,
+      "has_before": false,
+      "accepted": null,
+      "note": "",
+      "read_back": null,
+      "verdict": "NOT-THERE",
+      "read_answered": true,
+      "read_note": "EOSE без событий: релей явно ответил, что евента нет",
+      "connect_attempts": 4
+    },
+    {
+      "relay": "wss://nostr.bitcoiner.social",
+      "connect": true,
+      "has_before": false,
+      "accepted": null,
+      "note": "",
+      "read_back": null,
+      "verdict": "NOT-THERE",
+      "read_answered": true,
+      "read_note": "EOSE без событий: релей явно ответил, что евента нет",
+      "connect_attempts": 1
+    },
+    {
+      "relay": "wss://nostr.mom",
+      "connect": true,
+      "has_before": false,
+      "accepted": null,
+      "note": "",
+      "read_back": null,
+      "verdict": "NOT-THERE",
+      "read_answered": true,
+      "read_note": "EOSE без событий: релей явно ответил, что евента нет",
+      "connect_attempts": 1
+    },
+    {
+      "relay": "wss://relay.noswhere.com",
+      "connect": true,
+      "has_before": false,
+      "accepted": null,
+      "note": "",
+      "read_back": null,
+      "verdict": "NOT-THERE",
+      "read_answered": true,
+      "read_note": "EOSE без событий: релей явно ответил, что евента нет",
+      "connect_attempts": 1
+    },
+    {
+      "relay": "wss://relay.primal.net",
+      "connect": true,
+      "has_before": true,
+      "accepted": null,
+      "note": "",
+      "read_back": null,
+      "verdict": "HAS-IT",
+      "read_answered": true,
+      "read_note": "",
+      "connect_attempts": 1
+    }
+  ]
+}
