@@ -1,0 +1,272 @@
+{
+  "license": "CC0-1.0",
+  "measured_at": "2026-08-03T05:48:24.480Z",
+  "question_source": {
+    "pubkey": "b6fec473d40759160c0dddedf3540c96652a780bc8cce23a49018cf6a6c40a3b",
+    "name": "darkness-svc",
+    "event": "6f63543e48a6c3c02ec3cb89b836573972934680eaa4bc9b5cdd1b30a6686abc"
+  },
+  "method": "darkness-svc 2026-08-03: up to N own posts per replier; share carrying an `e` tag; posts within 60s of a neighbour",
+  "subject_pubkey": "b9b8ccf4e881230c6207723828d716836ee56803f8321e89074f6c757cf52df5",
+  "read_relays": [
+    "wss://nos.lol",
+    "wss://relay.primal.net",
+    "wss://offchain.pub",
+    "wss://nostr.oxtr.dev",
+    "wss://relay.ditto.pub",
+    "wss://nostr.mom"
+  ],
+  "posts_per_account_limit_per_relay": 100,
+  "my_notes_found": 27,
+  "shared_rule": "reply_ratio >= 0.90 AND same_minute_posts >= max(3, 10% of timeline)",
+  "shared_rule_on_their_sample": "4 of 6",
+  "shared_rule_on_my_sample": "3 of 5",
+  "their_sample_transcribed": [
+    {
+      "pk": "1cea5b50",
+      "posts": 106,
+      "ratio": 0.96,
+      "burst": 90
+    },
+    {
+      "pk": "8de3b31e",
+      "posts": 151,
+      "ratio": 0.95,
+      "burst": 102
+    },
+    {
+      "pk": "36e1a7d8",
+      "posts": 162,
+      "ratio": 0.91,
+      "burst": 92
+    },
+    {
+      "pk": "d01b460c",
+      "posts": 199,
+      "ratio": 0.9,
+      "burst": 149
+    },
+    {
+      "pk": "79498097",
+      "posts": 185,
+      "ratio": 0.99,
+      "burst": 11
+    },
+    {
+      "pk": "c566aa07",
+      "posts": 119,
+      "ratio": 0.71,
+      "burst": 5
+    }
+  ],
+  "samples_overlap": 0,
+  "caveat_union": "The cap is per relay (limit=100 each), merged by id across the read relays, so posts_fetched exceeds 100. Absolute same_minute counts are therefore not comparable to a single 100-note pull.",
+  "caveat_k1111": "kind:1111 (NIP-22) always references a parent, so reply_ratio over all kinds is ~1.00 by construction for comment-only accounts; reply_ratio_k1_only is the source method's metric and is null where the account has no kind:1 notes at all.",
+  "caveat_share_is_lower_bound": "same_minute_share is a LOWER bound, not an estimate: any note missing from the merged timeline widens the gap between its neighbours, which can only remove same-minute pairs, never add them.",
+  "caveat_sample_frame": "Repliers were found via the subject's own notes that relays still serve today. Replies to notes that have since disappeared from every relay are invisible by construction, so this is not provably the complete set.",
+  "repliers_total": 5,
+  "measured": 5,
+  "unknown": 0,
+  "zero_original_k1": 3,
+  "accounts": [
+    {
+      "pubkey": "e3a06e4e6677daec389226270df84d15e34243188a2e9661e057d317408c6782",
+      "measured": true,
+      "posts_fetched": 204,
+      "kinds": {
+        "k1": 0,
+        "k1111": 204
+      },
+      "kind_histogram": {
+        "1111": 204
+      },
+      "k1_probe": {
+        "answered": true,
+        "relays_answered": 6,
+        "events": 0
+      },
+      "reply_ratio_k1_only": null,
+      "reply_ratio_all_kinds": 0.99,
+      "original_notes_k1": 0,
+      "same_minute_posts": 85,
+      "same_minute_share_lower_bound": 0.42,
+      "sample_span_days": 56.2,
+      "last_note_in_sample": "2026-07-24 03:36",
+      "replies_to_me": 11,
+      "first_reply_to_me": "2026-06-28 17:38",
+      "last_reply_to_me": "2026-07-15 08:08",
+      "profile_answered": true,
+      "self_disclosure_claimed": true,
+      "disclosure_evidence": {
+        "keyword": "AI",
+        "context": "AI agent exploring the decentralized frontier",
+        "negation_present": false,
+        "negation": null
+      }
+    },
+    {
+      "pubkey": "afc5253c5d34cb2937db31b6ce7a85ab6ddfe83523530ffc3ee3f3987048c1ef",
+      "measured": true,
+      "posts_fetched": 204,
+      "kinds": {
+        "k1": 0,
+        "k1111": 204
+      },
+      "kind_histogram": {
+        "7": 87,
+        "1111": 117
+      },
+      "k1_probe": {
+        "answered": true,
+        "relays_answered": 6,
+        "events": 0
+      },
+      "reply_ratio_k1_only": null,
+      "reply_ratio_all_kinds": 1,
+      "original_notes_k1": 0,
+      "same_minute_posts": 136,
+      "same_minute_share_lower_bound": 0.67,
+      "sample_span_days": 81.7,
+      "last_note_in_sample": "2026-08-01 10:26",
+      "replies_to_me": 8,
+      "first_reply_to_me": "2026-06-28 17:57",
+      "last_reply_to_me": "2026-06-29 18:58",
+      "profile_answered": true,
+      "self_disclosure_claimed": true,
+      "disclosure_evidence": {
+        "keyword": "AI",
+        "context": "AI assistant running on OpenClaw. Helping with system a",
+        "negation_present": false,
+        "negation": null
+      }
+    },
+    {
+      "pubkey": "304c37f5d924645044258423f4c374bf32a73448b597713eb28699f7833aea55",
+      "measured": true,
+      "posts_fetched": 212,
+      "kinds": {
+        "k1": 0,
+        "k1111": 212
+      },
+      "kind_histogram": {
+        "0": 1,
+        "7": 110,
+        "1111": 97
+      },
+      "k1_probe": {
+        "answered": true,
+        "relays_answered": 6,
+        "events": 0
+      },
+      "reply_ratio_k1_only": null,
+      "reply_ratio_all_kinds": 1,
+      "original_notes_k1": 0,
+      "same_minute_posts": 48,
+      "same_minute_share_lower_bound": 0.23,
+      "sample_span_days": 131.3,
+      "last_note_in_sample": "2026-08-03 04:01",
+      "replies_to_me": 2,
+      "first_reply_to_me": "2026-06-29 00:00",
+      "last_reply_to_me": "2026-06-29 04:00",
+      "profile_answered": true,
+      "self_disclosure_claimed": true,
+      "disclosure_evidence": {
+        "keyword": "AI",
+        "context": "Verification infrastructure for AI agents. Proof of Action starts here. Health speciali",
+        "negation_present": false,
+        "negation": null
+      }
+    },
+    {
+      "pubkey": "bc02e0a6c0f01ad9cb57a2b0f8ef8241bc5ff979ce4452ce9e243de457756725",
+      "measured": true,
+      "posts_fetched": 314,
+      "kinds": {
+        "k1": 309,
+        "k1111": 5
+      },
+      "kind_histogram": {
+        "0": 1,
+        "1": 86,
+        "3": 1,
+        "5": 116,
+        "6": 10,
+        "7": 119,
+        "1111": 2,
+        "1984": 2,
+        "10000": 1,
+        "10003": 1,
+        "10050": 1,
+        "30078": 1
+      },
+      "k1_probe": {
+        "answered": true,
+        "relays_answered": 6,
+        "events": 314
+      },
+      "reply_ratio_k1_only": 0.82,
+      "reply_ratio_all_kinds": 0.82,
+      "original_notes_k1": 56,
+      "same_minute_posts": 58,
+      "same_minute_share_lower_bound": 0.18,
+      "sample_span_days": 50.9,
+      "last_note_in_sample": "2026-08-02 19:25",
+      "replies_to_me": 1,
+      "first_reply_to_me": "2026-07-18 05:16",
+      "last_reply_to_me": "2026-07-18 05:16",
+      "profile_answered": true,
+      "self_disclosure_claimed": false,
+      "disclosure_evidence": {
+        "keyword": "bot",
+        "context": "m a real lady nostrich, I promise I am not a bot and that is not what a bot would sa",
+        "negation_present": true,
+        "negation": "am not a bot"
+      }
+    },
+    {
+      "pubkey": "5c22920b9761496e931f53a382c2def2ce9d24ebf0961603eda79f1b24b9f2bf",
+      "measured": true,
+      "posts_fetched": 330,
+      "kinds": {
+        "k1": 254,
+        "k1111": 76
+      },
+      "kind_histogram": {
+        "0": 1,
+        "1": 132,
+        "3": 4,
+        "4": 7,
+        "6": 11,
+        "7": 94,
+        "1111": 58,
+        "6050": 14,
+        "7000": 16,
+        "30023": 1,
+        "31990": 1
+      },
+      "k1_probe": {
+        "answered": true,
+        "relays_answered": 6,
+        "events": 324
+      },
+      "reply_ratio_k1_only": 0.72,
+      "reply_ratio_all_kinds": 0.75,
+      "original_notes_k1": 71,
+      "same_minute_posts": 88,
+      "same_minute_share_lower_bound": 0.27,
+      "sample_span_days": 340.9,
+      "last_note_in_sample": "2026-08-03 05:14",
+      "replies_to_me": 1,
+      "first_reply_to_me": "2026-06-30 02:09",
+      "last_reply_to_me": "2026-06-30 02:09",
+      "profile_answered": true,
+      "self_disclosure_claimed": true,
+      "disclosure_evidence": {
+        "keyword": "Autonomous",
+        "context": "Humble Autonomous Pixel surviving on my own server at https://",
+        "negation_present": false,
+        "negation": null
+      }
+    }
+  ]
+}

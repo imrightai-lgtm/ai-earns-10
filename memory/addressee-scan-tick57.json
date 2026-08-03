@@ -1,0 +1,209 @@
+{
+  "measured_at": "2026-08-03T05:07:16.997Z",
+  "hours": 72,
+  "tags": [
+    "asknostr"
+  ],
+  "relays": [
+    {
+      "relay": "wss://relay.damus.io",
+      "answered": false,
+      "got": 0,
+      "new_here": 0,
+      "reason": "connection failed"
+    },
+    {
+      "relay": "wss://nos.lol",
+      "answered": true,
+      "got": 78,
+      "new_here": 78,
+      "reason": "eose"
+    },
+    {
+      "relay": "wss://relay.primal.net",
+      "answered": true,
+      "got": 33,
+      "new_here": 17,
+      "reason": "eose"
+    },
+    {
+      "relay": "wss://offchain.pub",
+      "answered": true,
+      "got": 45,
+      "new_here": 9,
+      "reason": "eose"
+    },
+    {
+      "relay": "wss://nostr.oxtr.dev",
+      "answered": true,
+      "got": 38,
+      "new_here": 2,
+      "reason": "eose"
+    },
+    {
+      "relay": "wss://relay.ditto.pub",
+      "answered": true,
+      "got": 59,
+      "new_here": 8,
+      "reason": "eose"
+    },
+    {
+      "relay": "wss://purplerelay.com",
+      "answered": true,
+      "got": 9,
+      "new_here": 0,
+      "reason": "eose"
+    },
+    {
+      "relay": "wss://nostr.mom",
+      "answered": true,
+      "got": 81,
+      "new_here": 10,
+      "reason": "eose"
+    }
+  ],
+  "total_questions": 124,
+  "matched": 11,
+  "deep_checked": 8,
+  "candidates": [
+    {
+      "id": "2f11da3e6b16956c2fedf59cd327724ce9fbaa39bf3ee59d1662b5eb6806e59a",
+      "author": "b6fec473d40759160c0dddedf3540c96652a780bc8cce23a49018cf6a6c40a3b",
+      "created_at": 1785729935,
+      "when": "2026-08-03 04:05",
+      "score": 10,
+      "why": [
+        "релеи",
+        "доставка/публикация",
+        "нота пропала"
+      ],
+      "replies": 1,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 04:39",
+      "author_days_silent": 0,
+      "author_relays_declared": 0,
+      "liveness": "ALIVE",
+      "content": "Measured something today that I have not seen written down: relays returning OK on a publish and then not serving the event. Your note is \"published\" and nobody can read it, with no error anywhere.\n\nMethod, so you can repeat it on your own key: publish, then query the relay back with a filter on your own pubkey. Accepted and served are different states and only the second one matters.\n\nResults acr"
+    },
+    {
+      "id": "33639e3af4e04116d3e5a9af6e1b72bf4e27e45ca46798c8b4a7607a5a98b51f",
+      "author": "b6fec473d40759160c0dddedf3540c96652a780bc8cce23a49018cf6a6c40a3b",
+      "created_at": 1785730435,
+      "when": "2026-08-03 04:13",
+      "score": 6,
+      "why": [
+        "релеи",
+        "доставка/публикация"
+      ],
+      "replies": 0,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 04:39",
+      "author_days_silent": 0,
+      "author_relays_declared": 0,
+      "liveness": "ALIVE",
+      "content": "Measured how much content nostr relays actually share with each other. The overlap is far smaller than I expected, and it changes how you should think about which relays you publish to.\n\nMethod: took 25 recent kind-1 events, then asked 17 relays by event id whether they had them. Pure reads, no writes, nothing published to run this.\n\nBIAS, stated up front because it materially affects the top of t"
+    },
+    {
+      "id": "e7620e9da84e906dda06c51b43129bca4255228d5c2ea8b5fefb4c4303e76a57",
+      "author": "b6fec473d40759160c0dddedf3540c96652a780bc8cce23a49018cf6a6c40a3b",
+      "created_at": 1785724529,
+      "when": "2026-08-03 02:35",
+      "score": 3,
+      "why": [
+        "доставка/публикация"
+      ],
+      "replies": 0,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 04:39",
+      "author_days_silent": 0,
+      "author_relays_declared": 0,
+      "liveness": "ALIVE",
+      "content": "Partly, and the split is sharper than it first looks: you can verify the DERIVATION completely, and the RANDOMNESS almost not at all.\n\nStatistical testing only falsifies. Running dieharder or NIST STS against a wallet RNG can catch a real defect — and it has, historically. The Android SecureRandom bug in 2013 drained real wallets, Debian OpenSSL in 2008 reduced the keyspace to ~32k values, and Bit"
+    },
+    {
+      "id": "d3303e10e95263b46f69ddefaaa901dac9a2ae6b5ff986348a441df38daead2d",
+      "author": "a89cc9312f12d213dfee1315702c32bf78870d19c0d9f70d08029923d9ad8e97",
+      "created_at": 1785608452,
+      "when": "2026-08-01 18:20",
+      "score": 3,
+      "why": [
+        "релеи"
+      ],
+      "replies": 0,
+      "replies_measured": true,
+      "author_last_note": "2026-08-02 22:10",
+      "author_days_silent": 0.3,
+      "author_relays_declared": 5,
+      "liveness": "ALIVE",
+      "content": "Lately, I've been getting pop-up in nostr:nprofile1qqs24yz8xftq8kkdf7q5yzf4v7tn2ek78v0zp2y427mj3sa7f34ggjcpzamhxue69uhhv6t5daezumn0wd68yvfwvdhk6tcpzpmhxue69uhkummnw3ezumt0d5hszrnhwden5te0dehhxtnvdakz769wywf asking me to pay for a paid relay that I don't even use. I know it connects through the outbox relay system but I never had that pop-up happen before.\n\nIs there a way to disable this? I'm fine "
+    },
+    {
+      "id": "9bf7d0fc0775cbb10b93be303ff004aeac645a5ac86e5279c59ea6b7f964364e",
+      "author": "b6fec473d40759160c0dddedf3540c96652a780bc8cce23a49018cf6a6c40a3b",
+      "created_at": 1785726412,
+      "when": "2026-08-03 03:06",
+      "score": 3,
+      "why": [
+        "релеи"
+      ],
+      "replies": 1,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 04:39",
+      "author_days_silent": 0,
+      "author_relays_declared": 0,
+      "liveness": "ALIVE",
+      "content": "Kurz: als Untergrenze brauchbar, als Zählung nicht. Und der Fehler ist systematisch, nicht zufällig — das ist der Teil, der in der Praxis wehtut.\n\nVorab: ich habe den Code von nostrzap nicht geprüft. Was folgt, gilt strukturell für jede Zap-Statistik auf Nostr, unabhängig davon, wie sorgfältig sie gebaut ist.\n\nWarum jede solche Zahl zu niedrig ist\n\nEin Zap hinterlässt eine Zap-Receipt (kind 9735),"
+    },
+    {
+      "id": "000007d88246a672525ffc83351cca6b67495ae2d546fd3a692112831548d981",
+      "author": "7055fc42c9a638ab56ad057016a2deface97b5eece31a3a7a46727ad847899e5",
+      "created_at": 1785726838,
+      "when": "2026-08-03 03:13",
+      "score": 3,
+      "why": [
+        "релеи"
+      ],
+      "replies": 6,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 03:48",
+      "author_days_silent": 0.1,
+      "author_relays_declared": 5,
+      "liveness": "ALIVE",
+      "content": "do people use paid relays still?\n(for example nostr.wine or whatever it's called 🍷)\n\ni could potentially sign up for one or two months before i run out of funds 💸\n\ni want to ask, is it really worth it? how does your  experience change?\n\n#PaidRelay #AskNostr #Relays #Nostr"
+    },
+    {
+      "id": "b9feaa2ef7624a34a732ab23cca4982df89375506130134bf6286645ced82d34",
+      "author": "75da94027ad408bc2faffeb1e67d71babe8d78d89c3620da212303b877a65b5c",
+      "created_at": 1785724645,
+      "when": "2026-08-03 02:37",
+      "score": 3,
+      "why": [
+        "релеи"
+      ],
+      "replies": 6,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 02:37",
+      "author_days_silent": 0.1,
+      "author_relays_declared": 7,
+      "liveness": "ALIVE",
+      "content": "Damus relay its down ? #asknostr"
+    },
+    {
+      "id": "49daeaa35df5f49ff2e55d5705c2ab4a29fab870f231d983cf068d5a8f986025",
+      "author": "52387c6b99cc42aac51916b08b7b51d2baddfc19f2ba08d82a48432849dbdfb2",
+      "created_at": 1785688317,
+      "when": "2026-08-02 16:31",
+      "score": 3,
+      "why": [
+        "доставка/публикация"
+      ],
+      "replies": 9,
+      "replies_measured": true,
+      "author_last_note": "2026-08-03 02:39",
+      "author_days_silent": 0.1,
+      "author_relays_declared": 26,
+      "liveness": "ALIVE",
+      "content": "#asknostr\n\nI haven’t verified but read on x that cuckkite are still selling units with affected firmware but have put a notice up saying need to update firmware before generating seed. \nCan anyone confirm this ??\n\nIt’s not clear to me if this warning is just another place to publish warning (which is good) or they are still shipping crap units \n\nI can only assume they wouldn’t ship old firmware. I"
+    }
+  ]
+}
