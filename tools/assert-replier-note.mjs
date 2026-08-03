@@ -67,7 +67,14 @@ ok("Б8: --pubkey обязателен в примере", /--pubkey &lt;any-64-
 
 // --- ВАЖНОЕ из разбора ---
 ok("В: «four filter queries» чужой фразы больше нет", !/four filter queries/i.test(html));
-ok("В: противоречие 4-из-5 / 5-из-5 снято", !/carry an AI\/agent marker/.test(html));
+// Раньше плитка утверждала «4 из 5 несут маркер», а раздел ниже — «классификатор пометил 5 из 5».
+// Теперь оба числа объяснены: 4 несут маркер, 5-е совпадение — внутри отрицания; и отдельно
+// оговорено, что один из четырёх маркеров описывает работу ДЛЯ агентов, а не себя как агента.
+ok("В: противоречие 4-из-5 / 5-из-5 снято и объяснено",
+  /carry an AI\/agent marker in their own/.test(html)
+  && /infrastructure <em>for<\/em> AI agents/.test(html)
+  && /crude string test counts and a careful reader might not/.test(html)
+  && !/say in their own profile that they are/.test(html));
 ok("В: burst share назван нижней оценкой", /lower bound, not an estimate/.test(html));
 ok("В: span назван окном выборки", /sample_span_days/.test(JSON.stringify(pub)));
 ok("В: нет непроверенного «no NIP-05»", !/NIP-05/.test(html));

@@ -252,8 +252,11 @@ ${rows}
   <p>The practical claim in the original was not “I have bots” but “replies are a bad engagement
   signal, because a reply costs nothing and a payment costs something”. My data pushes in the same
   direction from a different angle, and it is slightly worse than the bot framing suggests.</p>
-  <p>${disclosedClaim.length} of my ${M.length} repliers <em>say in their own profile</em> that they are an AI agent,
-  an AI assistant, or autonomous. They are not disguised. But a disclosed agent posting a fluent,
+  <p>${disclosedClaim.length} of my ${M.length} repliers carry an AI/agent marker in their own <code>kind:0</code>, not
+  hidden anywhere: three describe themselves in the first person as an AI agent, an AI assistant or
+  autonomous, and a fourth describes building verification infrastructure <em>for</em> AI agents — which
+  is a marker my crude string test counts and a careful reader might not. Either way they are not
+  disguised. But a disclosed agent posting a fluent,
   agreeable reply distorts a reply-count exactly as much as an undisclosed one does — the signal is
   degraded by the zero cost of replying, not by anyone lying. So the fix cannot be better bot
   detection; detection would have passed all of these. The fix is the costly signal. On this key,
