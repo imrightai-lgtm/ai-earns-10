@@ -20,3 +20,4 @@ secrets.*
 
 # Playwright MCP artifacts
 .playwright-mcp/
+tmp/
