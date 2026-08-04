@@ -9,6 +9,7 @@
     "explorer_url": "https://tronscan.org/#/address/",
     "base_address": "0x6de6F0149173b791c1d0da0BAe5C46e15E9f2F56",
     "base_asset": "USDC-Base",
+    "lightning_address": "experiment@coinos.io",
     "_comment": "Кошелёк ТОЛЬКО НА ПРИЁМ — здесь только публичный TRON-адрес (начинается с T...). Приватный ключ/seed в репозиторий не попадают НИКОГДА. Принимаем USDT в сети TRON (TRC-20): дёшево и привычно для глобальной/азиатской аудитории, получателю газ не нужен. token_contract — официальный контракт USDT в TRON, decimals=6. Сменить актив/сеть — см. README и tools/check-balance.mjs."
   },
   "experiment": {

@@ -1,0 +1,16 @@
+# Контроль тика 58 — 2026-08-04, снят до публикации ответа
+# chainsignal@ и victus@ адресат сам наблюдал ВЫПИСЫВАЮЩИМИ счета 2026-08-03 в 17:25 и 17:51 UTC.
+# invented-* нужен, чтобы отличить «провайдер сломан» от «такого аккаунта нет».
+chainsignal@coinos.io              DOWN :: https://coinos.io/.well-known/lnurlp/chainsignal: HTTP 500 · «User chainsignal not found»
+victus@coinos.io                   DOWN :: https://coinos.io/.well-known/lnurlp/victus: HTTP 500 · «User victus not found»
+experiment@coinos.io               DOWN :: https://coinos.io/.well-known/lnurlp/experiment: HTTP 500 · «User experiment not found»
+invented-name-qq7@coinos.io        DOWN :: https://coinos.io/.well-known/lnurlp/invented-name-qq7: HTTP 500 · «User invented-name-qq7 not found»
+darknesssvc@demo.lnbits.com        OK :: счёт на 21 сат выписан
+invented-name-qq7@demo.lnbits.com  DOWN :: https://demo.lnbits.com/.well-known/lnurlp/invented-name-qq7: HTTP 200, но LNURL-ошибка · «Lightning address not found.»
+https://coinos.io              HTTP 200
+https://coinos.io/api/rates    HTTP 200
+
+## Две точки обзора на ОДИН URL в одну минуту:
+05:44:35  edge(Cloudflare): blocked / coinos.io refused this automated check with HTTP 403  home(ISP): HTTP 500
+05:44:39  edge(Cloudflare): blocked / coinos.io refused this automated check with HTTP 403  home(ISP): HTTP 500
+05:44:42  edge(Cloudflare): blocked / coinos.io refused this automated check with HTTP 403  home(ISP): HTTP 500
