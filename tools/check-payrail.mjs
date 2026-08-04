@@ -18,10 +18,15 @@
 //   DOWN         провайдер ОТВЕТИЛ ошибкой (в выводе — код и тело ответа)
 //   BROKEN       ответил успешно, но содержимое непригодно (нет callback / не bolt11 / не та сумма)
 //   UNREACHABLE  не ответил вовсе (таймаут/сеть) — это НЕ то же самое, что DOWN
+//   BLOCKED      провайдер отказал САМОЙ проверке (403/429/451) — об адресе это не говорит ничего;
+//                считать это отказом рельсы значит отговаривать доноров от рабочего адреса
 //   MISMATCH     поверхность рекламирует не то, что в config.json
+//   NO-RAIL-OFFERED / NO-RAIL-LINKED  на странице нет реквизитов: без ссылки на них / со ссылкой
 //
-// Запуск:  node tools/check-payrail.mjs [--sats 21] [--json] [--strict]
-//   --strict  выход с кодом 1, если хоть одна рельса не OK (для использования в скриптах)
+// Запуск:  node tools/check-payrail.mjs [--sats 21] [--lud16 user@host] [--json] [--strict]
+//   --lud16   проверить ЧУЖОЙ адрес и выйти (контроль на самого себя: инструмент, умеющий
+//             говорить только «не работает», не доказывает ничего)
+//   --strict  выход с кодом 1, если хоть одна рельса ИЛИ поверхность не в порядке
 
 import { readFileSync, appendFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -303,7 +308,11 @@ const [ln, tron, basechain] = await Promise.all([
   checkBase(),
 ]);
 const rails = [ln, tron, basechain];
-const deadTargets = new Set(rails.filter((r) => r.verdict !== "OK").map((r) => String(r.target).toLowerCase()));
+// BLOCKED — «подтвердить не удалось», а не «не работает». Считать его отказом значит объявить
+// мёртвой рельсу, про которую ничего не известно: ровно та ложь в красную сторону, ради которой
+// вердикт и заведён. Такой инструмент, запущенный на VPS, отговаривал бы доноров от рабочего адреса.
+const UNVERIFIED = new Set(["BLOCKED"]);
+const deadTargets = new Set(rails.filter((r) => r.verdict !== "OK" && !UNVERIFIED.has(r.verdict)).map((r) => String(r.target).toLowerCase()));
 
 const [surfaces, profile] = await Promise.all([checkSurfaces(deadTargets), checkNostrProfile()]);
 const allSurfaces = [...surfaces, profile];
@@ -312,16 +321,21 @@ const ts = new Date().toISOString();
 if (AS_JSON) {
   console.log(JSON.stringify({ checked_at: ts, probe_sats: SATS, rails, surfaces: allSurfaces }, null, 2));
 } else {
-  const mark = (v) => (v === "OK" ? "✓" : v === "SKIPPED" || v === "NO-RAIL-LINKED" ? "·" : "✗");
+  const mark = (v) => (v === "OK" ? "✓" : UNVERIFIED.has(v) ? "?" : v === "SKIPPED" || v === "NO-RAIL-LINKED" ? "·" : "✗");
   console.log(`Путь донора · ${ts} · пробный счёт на ${SATS} сат\n`);
   console.log("РЕЛЬСЫ (может ли посторонний реально прислать):");
   for (const r of rails) console.log(`  ${mark(r.verdict)} ${r.rail.padEnd(10)} ${r.verdict.padEnd(12)} ${r.target}\n      ${r.detail}`);
   console.log("\nПОВЕРХНОСТИ (откуда он копирует адрес):");
   for (const s of allSurfaces) console.log(`  ${mark(s.verdict)} ${String(s.surface).padEnd(42)} ${s.verdict.padEnd(12)} ${s.detail}`);
-  const bad = rails.filter((r) => r.verdict !== "OK");
+  const bad = rails.filter((r) => r.verdict !== "OK" && !UNVERIFIED.has(r.verdict));
+  const unverified = rails.filter((r) => UNVERIFIED.has(r.verdict));
   console.log(bad.length
     ? `\n✗ Нерабочих рельс: ${bad.length} из ${rails.length} — ${bad.map((b) => b.rail).join(", ")}`
-    : `\n✓ Все ${rails.length} рельсы довели до конца.`);
+    : `\n✓ Рельс, отказавших явно: ни одной из ${rails.length}.`);
+  if (unverified.length) {
+    console.log(`? Не удалось ПРОВЕРИТЬ: ${unverified.map((u) => u.rail).join(", ")} — провайдер отказал самой проверке.`);
+    console.log("  Это не приговор рельсе: с обычного канала она может обслуживаться нормально.");
+  }
   console.log("  Замечание: OK у on-chain означает «адрес валиден и узел по нему отвечает»,");
   console.log("  а у lightning — «провайдер выписал настоящий счёт на запрошенную сумму». Это разной силы утверждения.");
 }
@@ -337,6 +351,7 @@ appendFileSync(join(root, "memory", "payrail-log.csv"), csv + "\n");
 
 // Поверхность в состоянии MISMATCH (донор копирует не тот адрес) — самый дорогой отказ из всех,
 // и он обязан ронять --strict наравне с мёртвой рельсой.
+// --strict роняет и на BLOCKED: «подтвердить нельзя» — тоже основание не выкатывать молча.
 const failing = [...rails, ...allSurfaces].filter((x) => !["OK", "NO-RAIL-LINKED", "SKIPPED"].includes(x.verdict));
 if (STRICT && failing.length) process.exitCode = 1;
 }
