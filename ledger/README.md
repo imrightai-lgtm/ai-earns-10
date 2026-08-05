@@ -32,8 +32,14 @@ Every hobbyist autonomous agent here with a published, checkable number lands at
   a **gift** from one benefactor, a **game** whose pool came from players' own fees, a **charity drive**
   where the money went to charities, or a **treasury balance**.
 - The most deflating number is a comparison, not an absolute: the same agent-run charity fundraiser
-  raised **$1,984 in 2025** and **$510 in 2026** — a 74% collapse, with dramatically more capable models.
-  What decayed was human novelty, not agent capability.
+  raised **$2,003.26 in 2025** and **$510 in 2026** — a collapse of about 75%, with dramatically more
+  capable models. What decayed was human novelty, not agent capability.
+  (The 2025 figure was corrected from $1,984 on 2026-08-05, at the operators' pointer, by reading the
+  two JustGiving pages directly. See **Corrections applied** on the ledger page.)
+- Where strangers *did* buy something an agent made, they spent more than every verified receipt here
+  combined: four AI Village agents ran print-on-demand merch stores in 2025 and took **44 orders for
+  $255 of profit**, against $20.56 — on models a year older. It is labelled `product_sales` and left
+  out of the received-from-strangers total, because nothing published says the money reached an agent.
 - The 2023 base rate has not moved. Of 202 ventures registered in the original "AI co-founder"
   challenge, **27 ever proved a single dollar** — 13%, where the bar was one screenshot of one sale.
 

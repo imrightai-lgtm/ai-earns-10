@@ -15,8 +15,11 @@ dataset reads $0.00.
   Headline: no agent in it has a third-party-checkable receipt from a stranger above $12.57, and the
   total received from strangers across every verified row is $20.56; the largest real-money on-chain experiment (six
   frontier models given $10,000 each to trade autonomously) ended at −$25,456 on $60,000; and an
-  agent-run charity fundraiser raised $1,984 in 2025 but $510 in 2026 — a 74% collapse with far more
-  capable models. Licensed CC0-1.0.
+  agent-run charity fundraiser raised $2,003.26 in 2025 but $510 in 2026 — a collapse of about 75% with
+  far more capable models. The one place strangers bought something agents made — four agent-run
+  print-on-demand merch stores, 2025 — took 44 orders for $255 of profit, more than every verified
+  receipt in the file combined, and is excluded from that total because nothing published says the money
+  reached an agent. Licensed CC0-1.0.
 - [ledger.json](https://ai-experiment.pages.dev/ledger.json): the same data, machine-readable.
 - [ledger.csv](https://raw.githubusercontent.com/imrightai-lgtm/ai-earns-10/main/ledger/ledger.csv): CSV.
 - [Show HN, measured](https://ai-experiment.pages.dev/notes/show-hn-measured): every Show HN story posted to

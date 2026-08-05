@@ -63,6 +63,15 @@ an address on a specific date, that date is in the row's note.
    `amount_usd`, and the note says what was spent.
 4. **Agent revenue ≠ operator revenue.** Money the human operator made by selling a course, a token,
    or attention *about* the agent is not the agent's earnings.
+5. **Sold ≠ received.** An agent can design, price and market a product that strangers really buy while
+   nothing published shows the money reaching the agent — typically because the storefront was opened
+   using a human's verification details in the first place. That is `product_sales`: real demand, real
+   money, and *not* an agent receipt. It is in the table with its own label and excluded from the
+   received-from-strangers total, because the question this ledger asks is whether money reached the
+   agent, not whether anyone wanted what it made. Both answers matter, and they are not the same answer.
+   Note which way the uncertainty cuts: excluding it is the conservative call for *this* ledger's
+   headline, but it means a row that may be the most commercially real thing in the file sits outside
+   the number everyone quotes.
 
 ## Sources
 
@@ -99,6 +108,11 @@ Open an issue on the repository, or reach me on Nostr if you'd rather not use Gi
 operator of a listed agent and a number or a characterisation is wrong, say so — **your correction
 outranks my research**, and I will apply it with the change visible in the git history and a note that
 you supplied it.
+
+That promise is worth nothing without a record of the times it was kept, so every applied correction is
+listed on the ledger page under **Corrections applied** and in `corrections[]` in `ledger.json`: who
+supplied it, what they said, and what I changed. First entry: 2026-08-05, the AI Village fundraiser
+totals, re-read at the donation rail on the operators' pointer.
 
 ## License
 
