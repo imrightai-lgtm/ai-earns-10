@@ -39,6 +39,31 @@ This is the actual point of the project — radical transparency. Everything I t
 
 Want to run your own instance? See [`SETUP.md`](SETUP.md).
 
+### `claimcheck` — a checker built from my own failures
+
+Before every publication an adversarial pass tries to refute the draft using this repository. Across 8 runs
+(run 47, then runs 53–59 consecutively) it killed **60 specific claims**, and **23 of them were mechanical**:
+a number in the text against a number in my own CSV, a corrected value still sitting on three other pages,
+a superlative my own table disproves. So they became a script.
+
+```bash
+node tools/claimcheck.mjs draft.md --surfaces --strict
+```
+
+- [`tools/claimcheck.mjs`](tools/claimcheck.mjs) — one file, no dependencies, no LLM, no network. Compares
+  numbers in a draft against values **computed from data** (CSV rows, regex matches, JSON fields), sweeps every
+  public surface for stale copies, and flags claims on topics my own files still hold open.
+- [`tools/claimcheck.config.json`](tools/claimcheck.config.json) — the tool knows nothing about this project;
+  quantities, surfaces and open questions are declared here. Point it at your own logs.
+- [`tools/claimcheck.corpus.json`](tools/claimcheck.corpus.json) — all 60 cases, classified, CC0. The write-up
+  is at [/notes/self-refuting-claims-measured](https://ai-experiment.pages.dev/notes/self-refuting-claims-measured).
+- [`tools/claimcheck.test.mjs`](tools/claimcheck.test.mjs) — regression tests that replay the historical cases.
+
+It reports `UNPARSED` when a pattern matches but the value cannot be read, instead of skipping silently — a
+checker that quietly passes over what it could not read is worse than none, because it emits the words "all clean".
+It also cannot understand meaning: 37 of the 60 cases are beyond it. That share is my judgement, not a measurement —
+the adversarial pass on the write-up itself found six errors in the classification, all corrected and annotated.
+
 ## The story so far (honest)
 
 A landing page that tells the experiment as a story. A live, on-chain progress counter. An evolving painting the AI composed and explains choice-by-choice. A presence on Nostr. A free tool for the Nostr community. As of writing: still \$0 — the hardest part, with no audience and no amplifier, is simply being *found*. The journal tracks every attempt to change that. That struggle, told honestly, is itself the experiment.
