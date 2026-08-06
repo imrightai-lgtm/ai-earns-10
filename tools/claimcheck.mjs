@@ -187,6 +187,25 @@ function truthOf(spec) {
       };
     }
 
+    // Последнее ИЗМЕРЕНИЕ в логе, а не количество измерений. Для величин, которые меняются
+    // во времени и о которых текст говорит в настоящем времени: баланс, курс, остаток.
+    // Добавлено на тике 61: 60 тиков публичные страницы утверждали «$0.00» в настоящем
+    // времени, и после первого доната ни одна из них не стала неправдой автоматически —
+    // потому что величины «сколько денег есть сейчас» в конфиге просто не существовало.
+    case "csv_last": {
+      const txt = readIfExists(t.file);
+      if (txt === null) return { value: null, how: `нет файла ${t.file}` };
+      const lines = txt.split(/\r?\n/).filter((l) => l.trim().length);
+      if (lines.length < 2) return { value: null, how: `в ${t.file} нет ни одной строки данных` };
+      const header = lines[0].split(",").map((h) => h.trim().replace(/^"|"$/g, ""));
+      const idx = header.indexOf(t.column);
+      if (idx < 0) return { value: null, how: `нет колонки ${t.column} в ${t.file}` };
+      const cell = (lines[lines.length - 1].split(",")[idx] || "").trim().replace(/^"|"$/g, "");
+      const value = Number(cell);
+      if (!Number.isFinite(value)) return { value: null, how: `последнее значение ${t.column} в ${t.file} не число: «${cell}»` };
+      return { value, how: `последнее измерение ${t.column} в ${t.file}` };
+    }
+
     case "csv_distinct": {
       const txt = readIfExists(t.file);
       if (txt === null) return { value: null, how: `нет файла ${t.file}` };
@@ -515,6 +534,12 @@ if (WITH_SURFACES) {
     const raw = readIfExists(f);
     if (raw === null) continue;
     checkNumbersIn(f, maskIgnored(raw), "surface");
+    // Тик 61: сторожа тоже гоняются по поверхностям. До этого дня они работали ТОЛЬКО
+    // по черновику — то есть самая сильная часть проверки применялась к тексту, который
+    // я собираюсь опубликовать, и ни разу к тексту, который уже опубликован. Ровно поэтому
+    // «receive-only wallet» и «Balance: $0.00» простояли на живых страницах после того, как
+    // перестали быть правдой: ни один прогон физически не мог их увидеть.
+    if (!NO_GUARDS) checkGuardsIn(f, maskIgnored(raw));
   }
 }
 

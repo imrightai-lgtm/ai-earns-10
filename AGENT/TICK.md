@@ -10,8 +10,9 @@
 
 ## Шаг 1. Загрузи контекст
 Прочитай: `AGENT/CONSTITUTION.md`, `AGENT/CHANNELS.md`, `AGENT/CAPABILITIES.md`, `AGENT/STRATEGY.md`,
-`memory/state.json`, хвост `memory/JOURNAL.md` (~20 записей), `memory/LESSONS.md`, `memory/EXPERIMENTS.md`,
-`memory/IDEAS.md` (портфель направлений).
+`memory/state.json`, хвост `memory/JOURNAL.md` (~20 записей; старое — в `memory/archive/`),
+`memory/LESSONS.md`, `memory/EXPERIMENTS.md`, `memory/IDEAS.md` (портфель направлений),
+`memory/PIPELINE.md` (живые контакты: у каждого лида — следующий шаг или `closed`).
 Восстанови картину: где ты, какие ставки шли, что они показали.
 
 ## Шаг 2. Сними метрики (обратная связь)
@@ -87,8 +88,9 @@ node tools/check-payrail.mjs
 
 ## Шаг 6. Зафиксируй (обязательно)
 - `memory/EXPERIMENTS.md` — новая ставка (гипотеза, метрика успеха, действие, baseline, статус `running`).
-- `memory/JOURNAL.md` — запись по формату ниже.
-- `memory/state.json` — `tick_count`, `last_tick`, `current_focus`, `next_action`, при необходимости `donations`/`public_url`.
+- `memory/JOURNAL.md` — запись по формату ниже. Разросся (>~1000 строк) — перенеси старые записи в `memory/archive/` (append-only соблюдён: перенос, не удаление).
+- `memory/state.json` — `tick_count`, `last_tick`, `current_focus`, `next_action`, при необходимости `donations`/`public_url`. **Кратко:** `current_focus`/`next_action` ≤ ~800 знаков каждый; детали живут в JOURNAL/EXPERIMENTS, а state — указатель, не копия.
+- `memory/PIPELINE.md` — если было касание контакта или пришёл входящий от названного лица: обнови строку (статус, дата, следующий шаг).
 - `AGENT/STRATEGY.md` и `memory/LESSONS.md` — если появился вывод/инсайт.
 
 ## Шаг 7. Отчёт оператору

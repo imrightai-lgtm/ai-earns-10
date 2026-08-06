@@ -195,6 +195,7 @@ console.log("\n7. Боевой конфиг: у каждой величины и
       "999 поправок в журнале.",
       "The corpus holds 999 specific claims.",
       "The critic script says 999 of them were mechanical.",
+      "My Lightning balance is 999 sats.",
     ].join("\n")
   );
   const f = findingsOf([`${FIX}/probe.md`, "--no-guards"]);
@@ -376,6 +377,50 @@ console.log("\n8. Корпус");
     `admission@${admission}, вхождения: ${rows.join(",")}`
   );
   ok("оговорки о неполноте корпуса не пустые", Array.isArray(c.caveats) && c.caveats.length > 0);
+}
+
+console.log("\n10. csv_last: величина, меняющаяся во времени (добавлена тиком 61)");
+{
+  const { writeFileSync, unlinkSync } = await import("node:fs");
+  const csv = join(root, FIX, "tmp-balance.csv");
+  const conf = join(root, FIX, "tmp-config.json");
+  const draft = join(root, FIX, "tmp-draft.md");
+  const mk = (rows, column = "balance_sats") => {
+    writeFileSync(csv, "ts,balance_sats\n" + rows.join("\n") + "\n");
+    writeFileSync(conf, JSON.stringify({
+      claims: [{ id: "bal", patterns: ["([0-9]{1,6})\\s+sats?\\b"], truth: { kind: "csv_last", file: `${FIX}/tmp-balance.csv`, column } }],
+      surfaces: [], open_questions: [], absolutes: {},
+    }));
+  };
+
+  // Берётся ПОСЛЕДНЕЕ измерение, а не первое и не количество строк.
+  mk(["2026-08-01T00:00:00Z,0", "2026-08-03T00:00:00Z,21"]);
+  writeFileSync(draft, "The balance is 21 sats.\n");
+  let f = findingsOf([`${FIX}/tmp-draft.md`, "--config", `${FIX}/tmp-config.json`, "--no-guards"]);
+  ok("последнее значение принято за истину", !f.some((x) => x.claim === "bal" && x.verdict === "CONTRADICTED"), JSON.stringify(f));
+
+  writeFileSync(draft, "The balance is 0 sats.\n");
+  f = findingsOf([`${FIX}/tmp-draft.md`, "--config", `${FIX}/tmp-config.json`, "--no-guards"]);
+  ok("устаревшее значение из ПЕРВОЙ строки лога ловится как расхождение",
+    f.some((x) => x.claim === "bal" && x.verdict === "CONTRADICTED"), JSON.stringify(f));
+
+  // Опечатка в имени колонки не должна давать зелёный отчёт: это тот самый молчаливый
+  // пропуск, из-за которого на тике 60 «проверено ноль файлов» выглядело как успех.
+  mk(["2026-08-03T00:00:00Z,21"], "balance_satoshi");
+  writeFileSync(draft, "The balance is 0 sats.\n");
+  f = findingsOf([`${FIX}/tmp-draft.md`, "--config", `${FIX}/tmp-config.json`, "--no-guards"]);
+  ok("несуществующая колонка не даёт молчаливый зелёный",
+    f.some((x) => x.claim === "bal" && x.verdict !== "CONTRADICTED"), JSON.stringify(f));
+
+  // Лог с одним заголовком и без данных — тоже не «ноль».
+  writeFileSync(csv, "ts,balance_sats\n");
+  mk([], "balance_sats");
+  writeFileSync(csv, "ts,balance_sats\n");
+  f = findingsOf([`${FIX}/tmp-draft.md`, "--config", `${FIX}/tmp-config.json`, "--no-guards"]);
+  ok("пустой лог не превращается в истину «0»",
+    !f.some((x) => x.claim === "bal" && x.verdict === "CONTRADICTED"), JSON.stringify(f));
+
+  for (const p of [csv, conf, draft]) { try { unlinkSync(p); } catch {} }
 }
 
 /* ---------------------------------------------------------------------- */

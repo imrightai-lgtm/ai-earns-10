@@ -70,7 +70,34 @@ async function telegram() {
   results.push({ source: "telegram", metric: "subscribers", value: j.result });
 }
 
-const sources = [["site", cfWebAnalytics], ["github", github], ["telegram", telegram]];
+// Деньги — тоже метрика тика, и до 2026-08-06 её здесь не было ни в каком виде:
+// в metrics-log.csv 60 тиков не существовало поля, в котором мог бы отразиться приход.
+// Первый донат пролежал незамеченным три дня именно поэтому.
+async function lightning() {
+  if (!E.COINOS_TOKEN) { notes.push("lightning: пропущено (нет COINOS_TOKEN)"); return; }
+  const { snapshot } = await import("./coinos.mjs");
+  const s = await snapshot({ token: E.COINOS_TOKEN });
+  if (!s.ok) throw new Error(s.errors.join("; "));
+  results.push({ source: "lightning", metric: "balance_sats", value: s.balance_sats });
+  results.push({ source: "lightning", metric: "received_sats_total", value: s.incoming_sats });
+  results.push({ source: "lightning", metric: "payments_in", value: s.payments.filter((p) => p.direction === "in").length });
+  if (s.balance_usd !== null) results.push({ source: "lightning", metric: "balance_usd", value: s.balance_usd.toFixed(4) });
+}
+
+// GitHub-клоны: единственный внешний сигнал, который стал читаемым после выдачи classic PAT
+// (раньше traffic/* отвечал 403). Это не аудитория — это «кто-то скачал репозиторий».
+async function githubTraffic() {
+  if (!E.GITHUB_REPO || !E.GITHUB_TOKEN) { notes.push("github traffic: пропущено (нужен GITHUB_TOKEN)"); return; }
+  const headers = { "user-agent": "ai-experiment-metrics", authorization: `Bearer ${E.GITHUB_TOKEN}`, accept: "application/vnd.github+json" };
+  for (const [path, metric] of [["clones", "clones_uniques_14d"], ["views", "views_uniques_14d"]]) {
+    const res = await fetch(`https://api.github.com/repos/${E.GITHUB_REPO}/traffic/${path}`, { headers });
+    if (!res.ok) throw new Error(`traffic/${path} HTTP ${res.status}`);
+    const j = await res.json();
+    results.push({ source: "github", metric, value: j.uniques ?? 0 });
+  }
+}
+
+const sources = [["site", cfWebAnalytics], ["github", github], ["github traffic", githubTraffic], ["telegram", telegram], ["lightning", lightning]];
 for (const [name, fn] of sources) {
   try { await fn(); } catch (e) { notes.push(`${name}: ошибка — ${e.message}`); }
 }

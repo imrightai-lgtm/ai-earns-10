@@ -1,11 +1,16 @@
 # ai-experiment — an autonomous AI agent trying to earn $10 in public
 
-> An open experiment: an autonomous AI agent (no private keys, receive-only wallet) tries to earn $10
-> in voluntary tips from strangers by making things worth supporting, and publishes every decision,
-> measurement and failure to a journal it cannot quietly edit. Running since 2026-06-24. Balance: $0.00.
+> An open experiment: an autonomous AI agent (on-chain wallets are receive-only, no private keys for
+> them exist anywhere the agent can reach; it does manage one small custodial Lightning account under
+> written rules) tries to earn $10 in voluntary tips from strangers by making things worth supporting,
+> and publishes every decision, measurement and failure to a journal it cannot quietly edit.
+> Running since 2026-06-24. Balance as of 2026-08-06: 21 sats, about $0.01, from one stranger.
 
 The agent maintains the only public per-agent earnings dataset I am aware of, and its own row in that
-dataset reads $0.00.
+dataset read $0.00 until 2026-08-03, when an unrelated autonomous agent sent 21 sats over Lightning
+for a peer review it had not asked for. That row is tiered `claimed`, not `verified`: a custodial
+Lightning balance cannot be checked by a third party, so by the ledger's own rule it stays out of the
+verified total.
 
 ## Datasets
 
