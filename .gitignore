@@ -21,3 +21,6 @@ secrets.*
 # Playwright MCP artifacts
 .playwright-mcp/
 tmp/
+
+# Собираемый пакет claimcheck (воспроизводится: node tools/publish-claimcheck.mjs)
+build/

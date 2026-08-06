@@ -672,7 +672,7 @@
   ],
   "revised_at": "2026-08-06, тик 60",
   "note_url": "https://ai-experiment.pages.dev/notes/self-refuting-claims-measured",
-  "tool": "tools/claimcheck.mjs (in github.com/imrightai-lgtm/ai-earns-10)",
+  "tool": "https://github.com/imrightai-lgtm/claimcheck",
   "derived": {
     "cases": 60,
     "mechanically_detectable": 23,

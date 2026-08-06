@@ -27,8 +27,10 @@
 //   состязательная проверка нашла в этой разметке шесть ошибок сразу, все исправлены и подписаны.
 //
 // ЗАПУСК
-//   node tools/claimcheck.mjs draft.md [ещё-файлы...] [--config tools/claimcheck.config.json]
+//   node tools/claimcheck.mjs draft.md [ещё-файлы...] [--config <файл>] [--root <папка>]
 //                             [--surfaces] [--json] [--strict] [--no-guards]
+//   --root      корень проверяемого проекта (по умолчанию — текущая папка). Все пути данных
+//               и поверхностей в конфиге считаются от него.
 //   --surfaces  проверить ещё и все публичные поверхности из конфига (медленнее, но это ровно
 //               та проверка, которой мне не хватило на тике 59)
 //   --strict    выход с кодом 1, если что-то не прошло: CONTRADICTED, UNPARSED или UNVERIFIABLE
@@ -42,8 +44,6 @@ import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-
 /* ---------------------------------------------------------------- аргументы */
 const argv = process.argv.slice(2);
 const flag = (n) => argv.includes(n);
@@ -51,15 +51,31 @@ const opt = (n, d) => {
   const i = argv.indexOf(n);
   return i >= 0 && argv[i + 1] ? argv[i + 1] : d;
 };
+const VALUE_OPTS = ["--config", "--root"];
 const AS_JSON = flag("--json");
 const STRICT = flag("--strict");
 const WITH_SURFACES = flag("--surfaces");
 const NO_GUARDS = flag("--no-guards");
-const CONFIG_PATH = opt("--config", join(root, "tools", "claimcheck.config.json"));
+
+// Корень проекта, относительно которого читаются данные и поверхности, — это ПРОВЕРЯЕМЫЙ проект,
+// а не место, где лежит скрипт. Раньше он вычислялся как «папка над скриптом», и это работало
+// ровно до первой попытки положить инструмент в другой репозиторий: там `tools/..` указывал уже
+// не на проект пользователя, а на родителя его репозитория, и все истины молча становились
+// UNVERIFIABLE. Тот же класс ошибки, что и опечатка в глобе: проверка не проваливается, она
+// просто ничего не проверяет. Поэтому корень — cwd (или явный --root), и он печатается в шапке.
+const root = opt("--root", process.cwd());
+
+// Конфиг по умолчанию ищется в двух местах: <root>/claimcheck.config.json (обычный проект)
+// и <root>/tools/claimcheck.config.json (раскладка этого репозитория).
+const DEFAULT_CONFIGS = [
+  join(root, "claimcheck.config.json"),
+  join(root, "tools", "claimcheck.config.json"),
+];
+const CONFIG_PATH = opt("--config", DEFAULT_CONFIGS.find((p) => existsSync(p)) || DEFAULT_CONFIGS[0]);
 
 const drafts = argv.filter((a, i) => {
   if (a.startsWith("--")) return false;
-  if (i > 0 && argv[i - 1] === "--config") return false;
+  if (i > 0 && VALUE_OPTS.includes(argv[i - 1])) return false;
   return true;
 });
 
@@ -555,7 +571,10 @@ if (AS_JSON) {
   console.log(JSON.stringify({ checked: drafts, surfaces: WITH_SURFACES, findings }, null, 2));
 } else {
   const mark = { CONTRADICTED: "✗", UNPARSED: "✗", "OPEN-QUESTION": "!", ABSOLUTE: "?", UNVERIFIABLE: "·", OK: "✓" };
-  console.log(`claimcheck · ${drafts.join(", ")}${WITH_SURFACES ? " + поверхности" : ""}\n`);
+  console.log(`claimcheck · ${drafts.join(", ")}${WITH_SURFACES ? " + поверхности" : ""}`);
+  // Корень и конфиг печатаются всегда: если инструмент смотрит не туда, это должно быть видно
+  // в первой же строке, а не выясняться из того, что проверок почему-то ноль.
+  console.log(`  корень: ${root}\n  конфиг: ${relative(root, CONFIG_PATH) || CONFIG_PATH}\n`);
   if (!findings.length) console.log("  ничего из объявленного в конфиге в тексте не встретилось.");
   for (const grp of ["CONTRADICTED", "UNPARSED", "OPEN-QUESTION", "ABSOLUTE", "UNVERIFIABLE", "OK"]) {
     const list = findings.filter((f) => f.verdict === grp);

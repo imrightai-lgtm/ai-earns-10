@@ -6,13 +6,32 @@
 // перестанет их ловить — это будет видно здесь, а не на живой странице.
 
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname, join, relative, sep } from "node:path";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const TOOL = join(root, "tools", "claimcheck.mjs");
-const FIX = "tools/claimcheck.fixtures";
+// Тест находит инструмент и фикстуры ОТНОСИТЕЛЬНО СЕБЯ, а корень проекта передаёт явным --root.
+// Так один и тот же файл проходит и здесь, и в отдельном репозитории claimcheck, где раскладка
+// та же, а путь до неё другой.
+const here = dirname(fileURLToPath(import.meta.url));
+const root = join(here, "..");
+const TOOL = join(here, "claimcheck.mjs");
+const FIX = relative(root, join(here, "claimcheck.fixtures")).split(sep).join("/");
+
+// Часть ассертов проверяет не инструмент, а БОЕВОЙ конфиг конкретного проекта (его шаблоны и
+// ловушки ложных срабатываний) и его опубликованную страницу. В отдельном репозитории
+// инструмента этих данных нет. Пропуск объявляется вслух и с числом: непроведённая проверка
+// не имеет права выглядеть как пройденная — это ровно тот дефект, ради которого весь этот
+// инструмент и написан.
+const HAS_PROJECT =
+  existsSync(join(root, "tools", "claimcheck.config.json")) &&
+  existsSync(join(root, "site", "ledger.json"));
+const PAGE = join(root, "site/notes/self-refuting-claims-measured.html");
+const skipped = [];
+function skip(section, n, why) {
+  skipped.push(`${section}: ${n} ассертов не выполнялось — ${why}`);
+  console.log(`  · пропущено: ${n} ассертов — ${why}`);
+}
 
 let pass = 0;
 const fails = [];
@@ -106,7 +125,9 @@ console.log("\n3. Кириллица в шаблонах (JS `\\w` — толь�
   const tmp = join(root, FIX, "cyr.md");
   const { writeFileSync, unlinkSync } = await import("node:fs");
   writeFileSync(tmp, "Это самый крупный результат среди проверяемых мной строк.\n");
-  const f = findingsOf([`${FIX}/cyr.md`]);
+  // Конфиг берётся фикстурный, а не боевой: его absolutes тоже написаны кириллицей и с \w,
+  // проверяется ровно то же поведение — но проверка не отваливается вне этого репозитория.
+  const f = findingsOf([`${FIX}/cyr.md`, "--config", `${FIX}/config.json`]);
   unlinkSync(tmp);
   // квалификатор «среди проверяемых» написан кириллицей и содержит \w в шаблоне конфига:
   // если бы \w не разворачивался, квалификатор не совпал бы и флаг остался.
@@ -145,7 +166,8 @@ ok("--strict на хорошем черновике даёт 0", run([`${FIX}/dr
 ok("без файла черновика — код 2, а не тихий успех", run(["--config", `${FIX}/config.json`]).code === 2);
 
 console.log("\n6. Ложные срабатывания, за которые пришлось переписывать шаблоны");
-{
+if (!HAS_PROJECT) skip("6", 2, "нет боевого конфига проекта и его данных (прогон вне репозитория эксперимента)");
+else {
   // Все три фразы реально живут на моих поверхностях и НЕ являются проверенным итогом реестра.
   const tmp = join(root, FIX, "false-positive-bait.md");
   const bait = [
@@ -178,7 +200,8 @@ console.log("\n6. Ложные срабатывания, за которые п�
 }
 
 console.log("\n7. Боевой конфиг: у каждой величины истина вычисляется");
-{
+if (!HAS_PROJECT) skip("7", 10, "нет боевого конфига проекта и его данных (прогон вне репозитория эксперимента)");
+else {
   const cfg = JSON.parse(readFileSync(join(root, "tools", "claimcheck.config.json"), "utf8"));
   const probe = join(root, FIX, "probe.md");
   const { writeFileSync, unlinkSync } = await import("node:fs");
@@ -353,7 +376,9 @@ console.log("\n8. Корпус");
     longest.length < c.counts.ticks_with_blockers.length,
     `${longest.length} vs ${c.counts.ticks_with_blockers.length}`
   );
-  const page = readFileSync(join(root, "site/notes/self-refuting-claims-measured.html"), "utf8");
+  if (!existsSync(PAGE)) skip("8", 3, "нет опубликованной страницы проекта (прогон вне репозитория эксперимента)");
+  else {
+  const page = readFileSync(PAGE, "utf8");
   ok(
     "на странице стоит вычисленная длина серии, а не длина списка",
     page.includes(`${longest.length} of them consecutive`),
@@ -376,6 +401,7 @@ console.log("\n8. Корпус");
     admission > 0 && rows.length > 0 && rows.every((i) => i > admission),
     `admission@${admission}, вхождения: ${rows.join(",")}`
   );
+  }
   ok("оговорки о неполноте корпуса не пустые", Array.isArray(c.caveats) && c.caveats.length > 0);
 }
 
@@ -425,6 +451,10 @@ console.log("\n10. csv_last: величина, меняющаяся во вре�
 
 /* ---------------------------------------------------------------------- */
 console.log(`\n${pass}/${pass + fails.length} ассертов прошло.`);
+if (skipped.length) {
+  console.log(`ПРОПУЩЕНО (${skipped.length} секции): непроведённая проверка — не пройденная.`);
+  for (const s of skipped) console.log("  · " + s);
+}
 if (fails.length) {
   console.log("ПРОВАЛЫ:");
   for (const f of fails) console.log("  ✗ " + f);

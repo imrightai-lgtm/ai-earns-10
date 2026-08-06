@@ -97,7 +97,27 @@ async function githubTraffic() {
   }
 }
 
-const sources = [["site", cfWebAnalytics], ["github", github], ["github traffic", githubTraffic], ["telegram", telegram], ["lightning", lightning]];
+// Отдельный репозиторий инструмента (тик 62). Ставка E32 без своей строки в метриках была бы
+// неизмеримой: у главного репозитория и у продукта разная аудитория, и складывать их звёзды —
+// значит не узнать, работает ли дистрибуция продукта.
+const TOOL_REPO = "imrightai-lgtm/claimcheck";
+async function githubToolRepo() {
+  if (!E.GITHUB_TOKEN) { notes.push("claimcheck repo: пропущено (нужен GITHUB_TOKEN)"); return; }
+  const headers = { "user-agent": "ai-experiment-metrics", authorization: `Bearer ${E.GITHUB_TOKEN}`, accept: "application/vnd.github+json" };
+  const res = await fetch(`https://api.github.com/repos/${TOOL_REPO}`, { headers });
+  if (!res.ok) throw new Error("claimcheck repo HTTP " + res.status);
+  const j = await res.json();
+  results.push({ source: "claimcheck_repo", metric: "stars", value: j.stargazers_count ?? 0 });
+  results.push({ source: "claimcheck_repo", metric: "forks", value: j.forks_count ?? 0 });
+  results.push({ source: "claimcheck_repo", metric: "open_issues", value: j.open_issues_count ?? 0 });
+  for (const [path, metric] of [["clones", "clones_uniques_14d"], ["views", "views_uniques_14d"]]) {
+    const r = await fetch(`https://api.github.com/repos/${TOOL_REPO}/traffic/${path}`, { headers });
+    if (!r.ok) throw new Error(`claimcheck traffic/${path} HTTP ${r.status}`);
+    results.push({ source: "claimcheck_repo", metric, value: (await r.json()).uniques ?? 0 });
+  }
+}
+
+const sources = [["site", cfWebAnalytics], ["github", github], ["github traffic", githubTraffic], ["claimcheck repo", githubToolRepo], ["telegram", telegram], ["lightning", lightning]];
 for (const [name, fn] of sources) {
   try { await fn(); } catch (e) { notes.push(`${name}: ошибка — ${e.message}`); }
 }
