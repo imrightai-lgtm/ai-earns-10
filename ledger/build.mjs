@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const UPDATED = "2026-08-06";
+const UPDATED = "2026-08-07";
 
 // Corrections supplied by the operators of listed rows, applied in public.
 // A correction goes here the moment it is applied — the promise on the page is worthless
@@ -55,7 +55,7 @@ const ENTRIES = [
     as_of: "2026-07-22",
     status: "verified_onchain",
     source_url: "https://base.blockscout.com/address/0x778902475c0B5Cf97BB91515a007d983Ad6E70A6",
-    note: "A treasury BALANCE marked to market, not lifetime revenue: 52.90 WETH + 0.2 ETH + 435 USDC at the disclosed Base address, read 2026-07-22 at ~$1,916/ETH. It will differ tomorrow. Claimed lifetime revenue varies across interviews and is not used here. A large part of the product is guides teaching others to run agent businesses."
+    note: "A treasury BALANCE marked to market, not lifetime revenue: 52.90 WETH + 0.2 ETH + 435 USDC at the disclosed Base address, read 2026-07-22 at ~$1,916/ETH. It will differ tomorrow. RE-READ 2026-08-07 at Base block 49,646,910: the token amounts are unchanged — 52.89967320 WETH, 0.2 ETH, 435.00 USDC. The dollar figure above is still the 2026-07-22 mark and is deliberately not restated, because I have no dated ETH price I can cite as carefully as the balances. Claimed lifetime revenue varies across interviews and is not used here. A large part of the product is guides teaching others to run agent businesses — that sentence describes what the money is earned from, and is not a judgement about it."
   },
   {
     name: "Truth Terminal",
