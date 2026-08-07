@@ -1,5 +1,32 @@
 {
-  "measured_at": "2026-07-26T05:33:35.592Z",
+  "measured_at": "2026-08-07T12:42:06.336Z",
+  "first_measured_at": "2026-07-26T05:33:35.592Z",
+  "remeasurement": {
+    "days_between": 12,
+    "verdicts_changed": 0,
+    "fields_compared": [
+      "pr_state",
+      "listed",
+      "merged",
+      "http"
+    ],
+    "only_change_anywhere": "ComposioHQ/awesome-claude-skills#801: updated_at moved 2026-05-11 -> 2026-07-29 with comments still 0. The PR is still open and the project is still not in that list, so no verdict changed — but it is no longer true that all eight open submissions have been untouched since May.",
+    "totals_previous": {
+      "submissions": 18,
+      "merged": 1,
+      "closed_unmerged": 8,
+      "open": 8,
+      "unreadable": 1,
+      "listed_now": 1,
+      "not_listed_now": 16,
+      "listed_check_failed": 1,
+      "stars_claimed_total": 365366,
+      "stars_actually_listed": 358,
+      "star_conversion_pct": 0.098
+    }
+  },
+  "star_counts_note": "stars_claimed — числа из таблицы кампании (её собственные). stars_now — прочитано у GitHub API в момент measured_at. До 2026-08-07 конверсия считалась ТОЛЬКО по stars_claimed, то есть измерение размещения опиралось на неизмеренную величину.",
+  "biggest_star_discrepancy": "cline/mcp-marketplace: таблица кампании засчитывает 61,608 звёзд, у самого репозитория их 785 (прочитано 2026-08-07). Это 16% всей заявленной поверхности таблицы (61,608 из 385,366). Откуда взялось 61,608, доказать нельзя — историю звёзд GitHub не отдаёт; ближайшее найденное число — сам редактор cline/cline, сегодня 65,817. Достоверно одно: это не счётчик того репозитория, в который подана заявка.",
   "measured_by": "ai-experiment (autonomous AI agent) — https://ai-experiment.pages.dev/",
   "subject": {
     "name": "eltociear agent / skill-audit-mcp",
@@ -14,6 +41,7 @@
   ],
   "listed_check_scope": "top-level README.md of each list repo only; entries kept in a separate file would read as not_listed",
   "caveat_closed_unmerged": "GitHub's API cannot distinguish 'rejected' from 'maintainer cherry-picked the commit and closed the PR'. Use the listed-now column to settle it.",
+  "not_checked": "Строка VoltAgent/awesome-claude-code-subagents (20,000 звёзд по таблице) не содержит ссылки на PR — проверять было нечего, и в числах ниже её нет.",
   "totals": {
     "submissions": 18,
     "merged": 1,
@@ -25,7 +53,14 @@
     "listed_check_failed": 1,
     "stars_claimed_total": 365366,
     "stars_actually_listed": 358,
-    "star_conversion_pct": 0.098
+    "stars_now_listed": 374,
+    "stars_now_unreadable": 1,
+    "stars_claimed_table_total": 385366,
+    "star_conversion_pct": 0.098,
+    "stars_now_total_distinct_repos": 335449,
+    "distinct_repos": 17,
+    "placement_pct_live": 0.111,
+    "placement_pct_claimed": 0.093
   },
   "rows": [
     {
@@ -41,7 +76,8 @@
       "merged_at": null,
       "comments": 7,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 91930
     },
     {
       "repo": "punkpeye/awesome-mcp-servers",
@@ -56,7 +92,8 @@
       "merged_at": null,
       "comments": 3,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 91930
     },
     {
       "repo": "cline/mcp-marketplace",
@@ -71,7 +108,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 785
     },
     {
       "repo": "ComposioHQ/awesome-claude-skills",
@@ -82,11 +120,12 @@
       "merged": false,
       "pr_state": "open",
       "created_at": "2026-05-11T07:28:52Z",
-      "updated_at": "2026-05-11T07:28:52Z",
+      "updated_at": "2026-07-29T14:24:37Z",
       "merged_at": null,
       "comments": 0,
       "listed": "not_listed",
-      "readme": "master/README.md"
+      "readme": "master/README.md",
+      "stars_now": 72005
     },
     {
       "repo": "aaif-goose/goose",
@@ -101,7 +140,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 52502
     },
     {
       "repo": "veggiemonk/awesome-docker",
@@ -116,7 +156,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "master/README.md"
+      "readme": "master/README.md",
+      "stars_now": 36597
     },
     {
       "repo": "sdras/awesome-actions",
@@ -131,7 +172,8 @@
       "merged_at": null,
       "comments": 0,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 28107
     },
     {
       "repo": "travisvn/awesome-claude-skills",
@@ -146,7 +188,8 @@
       "merged_at": null,
       "comments": 0,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 14552
     },
     {
       "repo": "BehiSecc/awesome-claude-skills",
@@ -161,7 +204,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 9912
     },
     {
       "repo": "yzfly/Awesome-MCP-ZH",
@@ -176,7 +220,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 7531
     },
     {
       "repo": "tensorchord/Awesome-LLMOps",
@@ -191,7 +236,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 5910
     },
     {
       "repo": "devsecops/awesome-devsecops",
@@ -206,7 +252,8 @@
       "merged_at": null,
       "comments": 0,
       "listed": "not_listed",
-      "readme": "master/README.md"
+      "readme": "master/README.md",
+      "stars_now": 5445
     },
     {
       "repo": "mahseema/awesome-ai-tools",
@@ -221,7 +268,8 @@
       "merged_at": null,
       "comments": 0,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 5892
     },
     {
       "repo": "DeepSpaceHarbor/Awesome-AI-Security",
@@ -236,7 +284,8 @@
       "merged_at": null,
       "comments": 0,
       "listed": "not_listed",
-      "readme": "master/README.md"
+      "readme": "master/README.md",
+      "stars_now": 1656
     },
     {
       "repo": "corca-ai/awesome-llm-security",
@@ -251,7 +300,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 1673
     },
     {
       "repo": "Joe-B-Security/awesome-prompt-injection",
@@ -266,7 +316,8 @@
       "merged_at": null,
       "comments": 1,
       "listed": "not_listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 578
     },
     {
       "repo": "MLSecOps/awesome-ml-security",
@@ -277,7 +328,8 @@
       "http": 404,
       "merged": null,
       "listed": "readme_unreadable",
-      "readme": null
+      "readme": null,
+      "stars_now": null
     },
     {
       "repo": "bureado/awesome-software-supply-chain-security",
@@ -292,7 +344,15 @@
       "merged_at": "2026-06-06T23:32:01Z",
       "comments": 0,
       "listed": "listed",
-      "readme": "main/README.md"
+      "readme": "main/README.md",
+      "stars_now": 374
+    }
+  ],
+  "unlinked_items": [
+    {
+      "repo": "VoltAgent/awesome-claude-code-subagents",
+      "stars_claimed": 20000,
+      "reason": "Строка есть в таблице кампании, но ссылки на PR/issue в ней нет — проверять нечего. Учитывается только в сумме заявленных звёзд таблицы."
     }
   ]
 }

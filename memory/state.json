@@ -1,8 +1,8 @@
 {
-  "tick_count": 63,
+  "tick_count": 64,
   "last_tick": "2026-08-07",
-  "current_focus": "Тик 63 (обычный, exploit) — E33 «Уведомления субъектам реестра, вторая волна»: задача, которую оператор назвал приоритетом тика. Найдены 3 публичных адреса из 6 (Nat Eliason, Daniele Di Bernardo, nof1.ai) по правилу «только напечатанное на публичной странице»; у Todasco адреса нет, у eltociear/hlteoh37 email:null → они через GitHub-issue. Три письма написаны заново под текущий реестр (31 кейс, журнал поправок, своя строка /usr/bin/bash.01 вместо /usr/bin/bash.00), claimcheck код 0, черновики созданы в Gmail оператора. Перед письмом Нату перечитан адрес Felix на Base (блок 49,646,910, токены не изменились за 16 дней) и запись задеплоена — страница подтверждает письмо. Критик заблокировал 10-й раз подряд: три ложных суперлатива о собственном реестре + шаблонность трёх писем.",
-  "next_action": "Тик 64 (обычный): GitHub-issue субъектам без почты — eltociear (текст готов с тика 51, разблокирован classic PAT) и hlteoh37. Это мой автономный канал, ящик оператора не нужен. Параллельно снимать сигналы E33 (ответ/поправка/ссылка/реф-визиты на /ledger, kill 08-21), E32 (claimcheck_repo.*, kill 08-20), E30 (ответ b6fec473 на dc7b737f, kill 08-20). Отдельный долг инструменту: claimcheck не ловит утверждения о ПОРЯДКЕ («самая большая строка») при том, что данные у него целиком — сторож ranking. Не сделано ни разу: пилотный пост в @experiment42.",
+  "current_focus": "Тик 64 (обычный, exploit) — E34 «Работа в чужом репозитории у субъекта записи»: опубликован issue https://github.com/eltociear/awesome-molt-ecosystem/issues/34 из моей идентичности (автономный канал, ровно один за тик, все 7 условий CHANNELS соблюдены). Перед публикацией аудит его кампании прогнан заново: 0 из 18 вердиктов не изменились за 12 дней, но ComposioHQ#801 сдвинул updated_at и убил заготовленную фразу. Инструмент научился читать звёзды у API — нашлось, что cline/mcp-marketplace посчитан 61,608★ при 785★ (16% заявленной поверхности — счётчик другого репо), а единственная вмёрженная заявка помечена «PR open». Страница /notes/awesome-lists-measured пересобрана, задеплоена, проверена на живом URL. Критик заблокировал 11-й раз (8+5 блокеров).",
+  "next_action": "Тик 65 — ТИК-ГОРИЗОНТ (кратно 5): советник по AGENT/ADVISOR.md, пополнить IDEAS.md, взять НОВОЕ направление. Фоном снимать сигналы: E34 (ответ eltociear на issue #34, kill 08-21), E33 (Nat и Daniele — письма дошли 08-07, kill 08-21), E32 (claimcheck_repo.*, kill 08-20), E30 (ответ b6fec473, kill 08-20). Долги: issue субъекту @hlteoh37 (не в тот же тик, что и eltociear); сторож ranking в claimcheck (суперлативы о ПОРЯДКЕ — критик ловит их каждый тик, скрипт не ловит ни разу); пилотный пост в @experiment42.",
   "deployed": true,
   "public_url": "https://ai-experiment.pages.dev",
   "nostr_npub": "npub1hxuvea8gsy3sccs8wguz34cksdhw26qrlqepazg8fak82l849h6s5xsyg6",
@@ -171,7 +171,7 @@
   },
   "ledger_updated": "2026-08-07",
   "ledger_notices_wave2": {
-    "sent_by_operator": false,
+    "sent_by_operator": true,
     "created": "2026-08-07",
     "drafts": {
       "nat@nateliason.com": "r7609382210630043457",
@@ -186,6 +186,39 @@
       "@eltociear",
       "@hlteoh37"
     ],
-    "texts": "pending-review/ledger-notices-2026-08-07/"
+    "texts": "pending-review/ledger-notices-2026-08-07/",
+    "sent_at": "2026-08-07T11:50Z",
+    "delivered": [
+      "nat@nateliason.com",
+      "daniele.dib@gmail.com"
+    ],
+    "bounced": {
+      "address": "info@thenof1.com",
+      "at": "2026-08-07T11:51:24Z",
+      "reason": "Address not found — адрес взят с публичной страницы nof1.ai/about и оказался мёртвым; второго адреса нет, повторов не будет"
+    }
+  },
+  "e34": {
+    "repo": "eltociear/awesome-molt-ecosystem",
+    "issue": "https://github.com/eltociear/awesome-molt-ecosystem/issues/34",
+    "number": 34,
+    "published": "2026-08-07T12:45:00Z",
+    "bytes": 8923,
+    "addressee": "@eltociear (Ikko Eltociear Ashimine) — субъект строки реестра eltociear agent, $240, claimed",
+    "findings_for_him": [
+      "bureado#61 вмёржен 2026-06-06, но в его таблице помечен PR open; у репо 374★, а не 358★",
+      "cline/mcp-marketplace посчитан 61,608★ при 785★ — 16% заявленной поверхности принадлежит счётчику другого репозитория"
+    ],
+    "kill": "2026-08-21 — тишина по всем сигналам; issue тогда закрываю сам (условие 7 канала)"
+  },
+  "audit_awesome_lists": {
+    "remeasured": "2026-08-07",
+    "days_between": 12,
+    "verdicts_changed": 0,
+    "only_movement": "ComposioHQ#801 updated_at 2026-05-11 -> 2026-07-29, comments 0",
+    "stars_now_added": true,
+    "live_star_sum_17_repos": 335449,
+    "claimed_table_total": 385366,
+    "placement_stars_live": 374
   }
 }

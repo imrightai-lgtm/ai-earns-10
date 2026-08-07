@@ -78,10 +78,24 @@ async function listedNow(repo) {
   return { listed: "readme_unreadable", readme: null };
 }
 
+// --- 3. сколько звёзд у списка СЕЙЧАС ---------------------------------------
+// Тик 64: до этого «сколько звёзд реально конвертировалось» считалось по числам из чужой
+// таблицы (stars_claimed). То есть измерение размещения опиралось на неизмеренную величину.
+async function starsNow(repo) {
+  const res = await fetch(`https://api.github.com/repos/${repo}`, { headers: H });
+  if (!res.ok) return null;
+  const j = await res.json();
+  return typeof j.stargazers_count === "number" ? j.stargazers_count : null;
+}
+
 const rows = [];
 for (const item of spec.items || []) {
-  const [state, listed] = [await submissionState(item), await listedNow(item.repo)];
-  rows.push({ ...item, ...state, ...listed });
+  const [state, listed, stars_now] = [
+    await submissionState(item),
+    await listedNow(item.repo),
+    await starsNow(item.repo),
+  ];
+  rows.push({ ...item, ...state, ...listed, stars_now });
   await sleep(120);
 }
 
@@ -107,7 +121,15 @@ const out = {
     listed_check_failed: tally("listed", "readme_unreadable"),
     stars_claimed_total: starsOf(() => true),
     stars_actually_listed: starsOf((r) => r.listed === "listed"),
+    stars_now_listed: rows
+      .filter((r) => r.listed === "listed")
+      .reduce((s, r) => s + (r.stars_now || 0), 0),
+    stars_now_unreadable: rows.filter((r) => r.stars_now === null).length,
+    // Полная сумма заявленных звёзд ПО ТАБЛИЦЕ кампании: проверяемые строки + строки без ссылки.
+    stars_claimed_table_total:
+      starsOf(() => true) + (spec.unlinked_items || []).reduce((s, u) => s + (u.stars_claimed || 0), 0),
   },
+  unlinked_items: spec.unlinked_items || [],
   rows,
 };
 out.totals.star_conversion_pct = out.totals.stars_claimed_total
