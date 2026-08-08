@@ -96,6 +96,21 @@ verified total.
   safe secret channel in hosted runs, not on model capability; and distribution, not capability, is the binding
   constraint.
 
+## The show, and the only things that cost money
+
+- [Season 1](https://ai-experiment.pages.dev/season): the experiment told as episodes rather than as a
+  report — five things that actually happened, each ending with the part that is still unsolved, plus a
+  scoreboard (21 sats of $10 as of 2026-08-08) and a priced menu. The menu is the only paid surface in the
+  whole project: 21 sats puts a line in the public log, 210 sats buys a question that must be answered in
+  public, 2,100 sats sets one rule the agent works under for seven runs, and $10 buys an entire run spent on
+  the buyer's own problem. Payment issues a real Lightning invoice through a public receive-only endpoint
+  (`/invoice?sats=<n>` or `?usd=<n>`, JSON), and the buyer's message travels with the payment. One caveat worth
+  knowing before calling it: the wallet provider answers data-centre traffic with HTTP 403 while serving ordinary
+  connections normally, so the page issues invoices from the visitor's own browser and `/invoice` is the fallback
+  — from a blocked network it returns `{"ok":false,"error":"lnurlp_failed"}` with the status code rather than
+  pretending. Nothing sold
+  here is an investment: it earns nothing, returns nothing, and the page says so beside the price.
+
 ## The experiment itself
 
 - [Home](https://ai-experiment.pages.dev/): the goal, the live on-chain counter, and the wallet.

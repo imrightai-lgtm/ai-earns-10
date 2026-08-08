@@ -450,6 +450,51 @@ console.log("\n10. csv_last: величина, меняющаяся во вре�
 }
 
 /* ---------------------------------------------------------------------- */
+console.log("\n11. истина из НЕСКОЛЬКИХ файлов (добавлена тиком 65)");
+{
+  // Почему это здесь: тик 62 перенёс половину журнала в архив, и истина величины «сколько
+  // тиков» молча стала считать 22 вместо 64. Три тика подряд это не проявлялось, потому что
+  // ни один шаблон не срабатывал — то есть проверка не провалилась, а НЕ СОСТОЯЛАСЬ.
+  const { writeFileSync, unlinkSync } = await import("node:fs");
+  const a = join(root, FIX, "tmp-part-a.md");
+  const b = join(root, FIX, "tmp-part-b.md");
+  const conf = join(root, FIX, "tmp-multi-config.json");
+  const draft = join(root, FIX, "tmp-multi-draft.md");
+  const mkConf = (files) => writeFileSync(conf, JSON.stringify({
+    claims: [{ id: "runs", patterns: ["\\b([2-9]\\d)\\s+runs\\b"],
+               truth: { kind: "regex_distinct", files, pattern: "^## Тик (\\d+)", min: 1 } }],
+    surfaces: [], open_questions: [], absolutes: {},
+  }));
+
+  writeFileSync(a, "## Тик 1\n## Тик 2\n## Тик 3\n");
+  writeFileSync(b, "## Тик 4\n## Тик 5\n");
+  writeFileSync(draft, "I have done 40 runs.\n");
+
+  // Один файл видит 3 тика, два файла — 5. Утверждение «40» ложно при обоих, но истина
+  // должна отличаться: иначе перенос в архив тихо занижает её и никто этого не замечает.
+  mkConf([`${FIX}/tmp-part-a.md`]);
+  let f = findingsOf([`${FIX}/tmp-multi-draft.md`, "--config", `${FIX}/tmp-multi-config.json`, "--no-guards"]);
+  const one = f.find((x) => x.claim === "runs");
+  mkConf([`${FIX}/tmp-part-a.md`, `${FIX}/tmp-part-b.md`]);
+  f = findingsOf([`${FIX}/tmp-multi-draft.md`, "--config", `${FIX}/tmp-multi-config.json`, "--no-guards"]);
+  const two = f.find((x) => x.claim === "runs");
+  ok("истина по одному файлу — 3", String(one?.truth) === "3", JSON.stringify(one));
+  ok("истина по двум файлам — 5, а не 3", String(two?.truth) === "5", JSON.stringify(two));
+
+  // Пропавший файл из списка не должен молча усечь истину: у несостоявшейся проверки
+  // обязано быть имя того, что не проверилось.
+  mkConf([`${FIX}/tmp-part-a.md`, `${FIX}/tmp-part-gone.md`]);
+  f = findingsOf([`${FIX}/tmp-multi-draft.md`, "--config", `${FIX}/tmp-multi-config.json`, "--no-guards"]);
+  const gone = f.find((x) => x.claim === "runs");
+  ok("отсутствующий файл не даёт молчаливую усечённую истину",
+    gone && gone.verdict !== "CONTRADICTED" && String(gone.truth ?? "") !== "3", JSON.stringify(gone));
+  ok("и он назван поимённо в объяснении",
+    /tmp-part-gone\.md/.test(JSON.stringify(gone ?? {})), JSON.stringify(gone));
+
+  for (const p of [a, b, conf, draft]) { try { unlinkSync(p); } catch {} }
+}
+
+/* ---------------------------------------------------------------------- */
 console.log(`\n${pass}/${pass + fails.length} ассертов прошло.`);
 if (skipped.length) {
   console.log(`ПРОПУЩЕНО (${skipped.length} секции): непроведённая проверка — не пройденная.`);

@@ -135,6 +135,29 @@ function readIfExists(p) {
   return existsSync(abs) ? readFileSync(abs, "utf8") : null;
 }
 
+// Истина, собранная из НЕСКОЛЬКИХ файлов (`files: [...]` вместо `file`).
+//
+// Написано не для красоты. Тик 62 перенёс тики 0-42 из JOURNAL.md в memory/archive/, и истина
+// величины `ticks` — «сколько различных номеров тиков в журнале» — молча стала считать 22 вместо
+// 64. Три тика подряд это никак не проявлялось ровно потому, что ни один шаблон по-английски
+// не срабатывал: проверка не провалилась, она не состоялась. Тот же класс, что корень «папка над
+// скриптом» (тик 62) и опечатка в глобе (тик 60).
+//
+// Отсутствующий файл здесь НЕ пропускается молча: у любой несостоявшейся проверки должно быть
+// имя того, что не проверилось, иначе усечённая истина выглядит как измеренная.
+function readTruthSources(t) {
+  const list = Array.isArray(t.files) && t.files.length ? t.files : [t.file];
+  const parts = [];
+  const missing = [];
+  for (const p of list) {
+    const txt = readIfExists(p);
+    if (txt === null) missing.push(p);
+    else parts.push(txt);
+  }
+  if (missing.length) return { text: null, how: `нет файла ${missing.join(", ")}` };
+  return { text: parts.join("\n"), how: list.join(" + ") };
+}
+
 // мини-glob: поддерживает ** и * в пути. Без зависимостей — их тут не будет.
 function globToRe(pattern) {
   let out = "";
@@ -238,10 +261,10 @@ function truthOf(spec) {
     }
 
     case "regex_count": {
-      const txt = readIfExists(t.file);
-      if (txt === null) return { value: null, how: `нет файла ${t.file}` };
-      const m = txt.match(reFromConfig(t.pattern, "gm"));
-      return { value: m ? m.length : 0, how: `совпадений /${t.pattern}/ в ${t.file}` };
+      const src = readTruthSources(t);
+      if (src.text === null) return { value: null, how: src.how };
+      const m = src.text.match(reFromConfig(t.pattern, "gm"));
+      return { value: m ? m.length : 0, how: `совпадений /${t.pattern}/ в ${src.how}` };
     }
 
     // Сколько РАЗЛИЧНЫХ значений захвачено группой. Написан не «на всякий случай»: наивный
@@ -249,8 +272,9 @@ function truthOf(spec) {
     // задвоенный заголовок «Тик 47». Инструмент, который считает строки вместо сущностей,
     // сам производит ровно тот разряд ошибки, который призван ловить.
     case "regex_distinct": {
-      const txt = readIfExists(t.file);
-      if (txt === null) return { value: null, how: `нет файла ${t.file}` };
+      const src = readTruthSources(t);
+      if (src.text === null) return { value: null, how: src.how };
+      const txt = src.text;
       const re = reFromConfig(t.pattern, "gm");
       const seen = new Set();
       let m;
@@ -262,7 +286,7 @@ function truthOf(spec) {
       }
       return {
         value: seen.size,
-        how: `различных значений /${t.pattern}/ в ${t.file}${t.min !== undefined ? ` (>= ${t.min})` : ""}`,
+        how: `различных значений /${t.pattern}/ в ${src.how}${t.min !== undefined ? ` (>= ${t.min})` : ""}`,
       };
     }
 
