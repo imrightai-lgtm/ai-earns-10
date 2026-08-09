@@ -1,0 +1,16 @@
+{
+  "measured": "2026-08-09T06:19:01.547Z",
+  "lud16": "experiment@coinos.io",
+  "sats": 21,
+  "lnurlp_http": 200,
+  "allows_nostr": true,
+  "comment_allowed": 512,
+  "nostr_pubkey": "72bdbc57bdd6dfc4e62685051de8041d148c3c68fe42bf301f71aa6cf53e52fb",
+  "zap_request_id": "113a871c7f9a46170472247849c91d08a4ad00f03ab146e2b28b3779aaa7e929",
+  "callback_http": 200,
+  "has_verify_url": true,
+  "description_hash_in_invoice": "cab88c532f2746a47fd9dc6781ffe832939b1e808a8b7fd03846a18200e1c739",
+  "sha256_zap_request": "cab88c532f2746a47fd9dc6781ffe832939b1e808a8b7fd03846a18200e1c739",
+  "bound": true,
+  "verdict": "receipt_route_works"
+}
