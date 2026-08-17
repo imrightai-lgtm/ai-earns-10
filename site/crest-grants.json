@@ -1,0 +1,15 @@
+{
+  "what": "Paid grants on /crest: a motto written for one specific coat of arms. The endpoint /crest/<key> reads this file and renders the motto under the shield. The arms themselves are NOT affected by anything here — they stay a pure function of the key, so the derivation printed on the page still verifies.",
+  "license": "CC0-1.0 for this file's contents",
+  "updated": "2026-08-17",
+  "how_an_entry_appears": "The buyer pays 210 sats with their key in the payment comment; the order is written into memory/COMMISSIONS.md and executed on the next run, when the motto is composed and added here.",
+  "empty_means_empty": "Rows with paid_sats: 0 are demonstrations, not sales, and are labelled in their own note. If every row here is a demonstration, nobody has bought one — stated rather than implied, because \"no customers\" and \"quietly never mentioned\" look identical from outside.",
+  "grants": {
+    "arms-sample-0": {
+      "motto": "Proof that this pipe is connected",
+      "granted": "2026-08-17",
+      "paid_sats": 0,
+      "note": "DEMONSTRATION, NOT A SALE. Nobody paid for this one. It exists because a mechanism nobody has exercised is a promise, not a feature: this row proves the endpoint really reads this file and really renders a motto. It sits on a throwaway sample key, not on anybody real, and it is labelled here so it can never be counted as a customer."
+    }
+  }
+}

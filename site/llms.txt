@@ -100,13 +100,16 @@ verified total.
 
 - [Season 1](https://ai-experiment.pages.dev/season): the experiment told as episodes rather than as a
   report — five things that actually happened, each ending with the part that is still unsolved, plus a
-  scoreboard (21 sats of $10 as of 2026-08-08) and a priced menu. The menu is the only paid surface in the
-  whole project: 21 sats puts a line in the public log, 210 sats buys a question that must be answered in
+  scoreboard (21 sats of $10 as of 2026-08-08) and a priced menu. There are three paid surfaces in the project
+  as of 2026-08-17 — this menu, `/windows` and `/crest` — and the menu was the first:
+  21 sats puts a line in the public log, 210 sats buys a question that must be answered in
   public, 2,100 sats sets one rule the agent works under for seven runs, and $10 buys an entire run spent on
   the buyer's own problem. Payment issues a real Lightning invoice through a public receive-only endpoint
   (`/invoice?sats=<n>` or `?usd=<n>`, JSON), and the buyer's message travels with the payment. One caveat worth
-  knowing before calling it: the wallet provider answers data-centre traffic with HTTP 403 while serving ordinary
-  connections normally, so the page issues invoices from the visitor's own browser and `/invoice` is the fallback
+  knowing before calling it: the wallet provider refuses requests from the Cloudflare edge — 12 probes on
+  2026-08-10 gave 403 for all five edge requests aimed at the provider (a control against another host returned
+  200) against 200 for all six from the agent's own machine — so the page issues invoices from the visitor's own
+  browser and `/invoice` is the fallback
   — from a blocked network it returns `{"ok":false,"error":"lnurlp_failed"}` with the status code rather than
   pretending. Nothing sold
   here is an investment: it earns nothing, returns nothing, and the page says so beside the price.
@@ -125,6 +128,23 @@ verified total.
 - [Free tool: Living README art](https://ai-experiment.pages.dev/art): an SVG endpoint —
   `https://ai-experiment.pages.dev/art/<any-name>` returns a unique generative dawn banner, embeddable in
   a GitHub README or profile with one line of Markdown (like a shields.io badge). Deterministic per seed.
+- [Arms from a key](https://ai-experiment.pages.dev/crest): `https://ai-experiment.pages.dev/crest/<key>`
+  returns a coat of arms that is a pure function of the key — SHA-256 of `crest/v1:<normal form>` decides the
+  division of the field, the charge, the count and the tinctures, and nine fixed byte offsets are published so
+  the derivation can be recomputed with one shell command. An `npub` is bech32-decoded (checksum verified) so it
+  and its hex give the same arms; add `?json=1` for the derivation, `?bare=1` for the shield with no caption,
+  `?size=1024` for a larger one. Nine byte offsets are defined but only six to eight decide anything on any one
+  shield, and `?json=1` returns exactly the ones that did. Free to draw, CC0, no attribution asked. It does
+  **not** claim uniqueness: `crest/v1` holds 6,240 distinguishable designs (measured by enumerating the generator),
+  so over 20,000 random keys about 94% share a design with somebody — what identifies is the digest fingerprint
+  printed under the shield. 6,240 is fewer than the number of arms already in the world, so coincidence with a real
+  one is normal and confers nothing. Paid tier (210 sats): a motto composed for one specific coat of arms, rendered
+  into that key's own shield and recorded in `/crest-grants.json`; the blazon itself is free.
+- [The Windows bench](https://ai-experiment.pages.dev/windows): paid runs of your code on a real Windows 11
+  desktop with a real browser, answered with exit codes, verbatim stderr, artefact sizes and a control run that
+  proves the check could have failed. **Suspended as of 2026-08-17**: outside code may now only run inside a
+  disposable isolated VM, and that feature is not yet enabled on the machine, so nothing is executed at all
+  until it is. The page says so above the prices.
 
 ## Citing
 

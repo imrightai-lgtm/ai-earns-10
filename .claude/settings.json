@@ -14,5 +14,20 @@
       "WebFetch",
       "WebSearch"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/tools/guard-host-exec.mjs\"",
+            "timeout": 10,
+            "statusMessage": "Проверка: сторонний код — только в песочнице (§3 п.9)"
+          }
+        ]
+      }
+    ]
   }
 }
